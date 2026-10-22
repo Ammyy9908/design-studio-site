@@ -101,10 +101,10 @@ export function BuilderShowcase() {
             }}
             className={`builder__step${i === active ? " is-active" : ""}`}
           >
-            <span className="builder__num">{String(i + 1).padStart(2, "0")}</span>
+            <span className="builder__num">Step {i + 1}</span>
             <h3>{s.title}</h3>
             <p>{s.body}</p>
-            <ul className="ticks">
+            <ul className="builder__points">
               {s.points.map((p) => (
                 <li key={p}>{p}</li>
               ))}

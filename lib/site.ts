@@ -14,7 +14,7 @@ export const release = {
 } as const;
 
 export const navLinks = [
-  { id: "make", label: "What you can make" },
+  { id: "make", label: "Formats" },
   { id: "websites", label: "Websites" },
   { id: "templates", label: "Templates" },
   { id: "together", label: "Teamwork" },
