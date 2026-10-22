@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+# Installers are dropped in at deploy time, not committed
+public/downloads/*
+!public/downloads/.gitkeep
+.claude/
