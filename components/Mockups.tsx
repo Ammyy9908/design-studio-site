@@ -190,3 +190,42 @@ export function BrowserArt() {
     </div>
   );
 }
+
+export function ServerMockup() {
+  return (
+    <div className="server-art" role="img" aria-label="Illustration of a self-hosted Design Studio server running in Docker Compose">
+      <div className="server-art__win">
+        <div className="server-art__bar" aria-hidden="true">
+          <i /><i /><i />
+          <span>docker compose ps</span>
+        </div>
+        <div className="server-art__content">
+          <div className="server-art__row">
+            <span className="server-art__status" />
+            <span className="server-art__svc">studio</span>
+            <span className="server-art__tag">Design Studio</span>
+          </div>
+          <div className="server-art__row">
+            <span className="server-art__status" />
+            <span className="server-art__svc">postgres</span>
+            <span className="server-art__tag">Database</span>
+          </div>
+          <div className="server-art__row">
+            <span className="server-art__status" />
+            <span className="server-art__svc">minio</span>
+            <span className="server-art__tag">File storage</span>
+          </div>
+          <div className="server-art__row">
+            <span className="server-art__status" />
+            <span className="server-art__svc">caddy</span>
+            <span className="server-art__tag">HTTPS</span>
+          </div>
+        </div>
+      </div>
+      <div className="server-art__badge" aria-hidden="true">
+        <span>https://studio.example.com</span>
+      </div>
+    </div>
+  );
+}
+

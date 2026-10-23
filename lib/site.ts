@@ -11,12 +11,20 @@ export const release = {
     href: "downloads/Design-Studio-windows.exe",
     requirements: "Windows 10 or later · 64-bit",
   },
+  // The self-hosted server: compose file, settings template and the server image (docker load).
+  server: {
+    label: "Download server bundle",
+    href: "downloads/design-studio-server.zip",
+    requirements: "Linux x86-64 or arm64 · Docker 24+",
+  },
 } as const;
 
 export const navLinks = [
-  { id: "make", label: "Formats" },
-  { id: "websites", label: "Websites" },
-  { id: "templates", label: "Templates" },
-  { id: "together", label: "Teamwork" },
-  { id: "faq", label: "FAQ" },
+  { id: "make", label: "Formats", href: "/#make" },
+  { id: "websites", label: "Websites", href: "/#websites" },
+  { id: "templates", label: "Templates", href: "/#templates" },
+  { id: "together", label: "Teamwork", href: "/#together" },
+  { id: "self-hosted", label: "Self-Hosted", href: "/self-hosted/" },
+  { id: "faq", label: "FAQ", href: "/#faq" },
 ] as const;
+

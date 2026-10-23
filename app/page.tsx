@@ -1,10 +1,11 @@
 import { BuilderShowcase } from "@/components/BuilderShowcase";
 import { DownloadButtons } from "@/components/DownloadButtons";
 import { FormatShowcase } from "@/components/FormatShowcase";
-import { AppleIcon, WindowsIcon, DownloadIcon, Logo } from "@/components/Icons";
-import { AssetsMockup, BrowserArt, BrowserFrame, CommentsMockup, OfflineArt, Stickers } from "@/components/Mockups";
+import { AppleIcon, WindowsIcon, DownloadIcon, Logo, ArrowRightIcon } from "@/components/Icons";
+import { AssetsMockup, BrowserArt, BrowserFrame, CommentsMockup, OfflineArt, ServerMockup, Stickers } from "@/components/Mockups";
 import { PageEffects } from "@/components/PageEffects";
 import { navLinks, release } from "@/lib/site";
+
 
 const websiteTemplates = [
   { src: "assets/tpl-salon.webp", alt: "Maison Lumière, a beauty salon website template with a soft pink arch" },
@@ -54,6 +55,10 @@ const faqs = [
     q: "Where are my photos kept?",
     a: "Photos you add in the desktop app stay on your computer and are ready to use in any design.",
   },
+  {
+    q: "Can I host the backend on my own servers?",
+    a: "Yes. Design Studio's server comes as one Docker Compose bundle with its own database, file storage and automatic HTTPS, so you can run it on any Linux machine and keep your team's work on your own infrastructure. The Self-Hosted Guide walks you through it.",
+  },
 ];
 
 export default function Home() {
@@ -70,7 +75,9 @@ export default function Home() {
           <ul className="nav__links">
             {navLinks.map((l) => (
               <li key={l.id}>
-                <a href={`#${l.id}`} data-nav-link>{l.label}</a>
+                <a href={l.href} data-nav-link={l.id === "self-hosted" ? undefined : ""}>
+                  {l.label}
+                </a>
               </li>
             ))}
           </ul>
@@ -196,6 +203,17 @@ export default function Home() {
                 </div>
                 <BrowserArt />
               </article>
+              <article className="bcard bcard--dark bcard--wide reveal" id="self-hosted">
+                <div className="bcard__text">
+                  <span className="sh-bento-badge">Self-hosted</span>
+                  <h3>Run it on your own server</h3>
+                  <p>Keep designs, photos and accounts on your own infrastructure. One Docker Compose bundle, with automatic HTTPS, and the desktop app connects to it.</p>
+                  <a href="/self-hosted/" className="btn btn--outline btn--sm sh-bento-btn">
+                    Read the Self-Hosted Guide <ArrowRightIcon className="sh-bento-btn__icon" />
+                  </a>
+                </div>
+                <ServerMockup />
+              </article>
             </div>
           </div>
         </section>
@@ -260,6 +278,7 @@ export default function Home() {
               <li><a href="#websites">Website builder</a></li>
               <li><a href="#templates">Templates</a></li>
               <li><a href="#together">Teamwork</a></li>
+              <li><a href="/self-hosted/">Self-hosting</a></li>
             </ul>
           </nav>
           <nav aria-label="Download">
@@ -274,6 +293,7 @@ export default function Home() {
             <ul>
               <li><a href="#faq">FAQ</a></li>
               <li><a href="#offline">Working offline</a></li>
+              <li><a href="/self-hosted/">Self-Hosted Guide</a></li>
             </ul>
           </nav>
         </div>
