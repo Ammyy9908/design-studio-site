@@ -11,11 +11,12 @@ export const release = {
     href: "downloads/Design-Studio-windows.exe",
     requirements: "Windows 10 or later · 64-bit",
   },
-  // The self-hosted server: compose file, settings template and the server image (docker load).
+  // The self-hosted server, one bundle per CPU architecture (made by deploy/self-hosted/make-bundle.sh
+  // in the app repository): the server image (docker load), compose file and settings template.
   server: {
-    label: "Download server bundle",
-    href: "downloads/design-studio-server.zip",
-    requirements: "Linux x86-64 or arm64 · Docker 24+",
+    requirements: "Linux · Docker 24+",
+    amd64: { label: "Server bundle · x86-64", href: "downloads/design-studio-server-0.1.0-linux-amd64.zip" },
+    arm64: { label: "Server bundle · arm64", href: "downloads/design-studio-server-0.1.0-linux-arm64.zip" },
   },
 } as const;
 

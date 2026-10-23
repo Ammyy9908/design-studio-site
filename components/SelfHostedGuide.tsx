@@ -274,16 +274,23 @@ export function SelfHostedGuide() {
                     a settings template.
                   </p>
                   <p>
-                    <a className="btn btn--violet btn--sm" href={`/${release.server.href}`} download>
-                      <DownloadIcon /> {release.server.label}
+                    <a className="btn btn--violet btn--sm" href={`/${release.server.amd64.href}`} download>
+                      <DownloadIcon /> {release.server.amd64.label}
                     </a>{" "}
-                    <span className="sh-small-note">{release.server.requirements}</span>
+                    <a className="btn btn--outline btn--sm" href={`/${release.server.arm64.href}`} download>
+                      <DownloadIcon /> {release.server.arm64.label}
+                    </a>
+                  </p>
+                  <p className="sh-small-note">
+                    Most servers are x86-64. Choose arm64 for Graviton, Ampere or Raspberry Pi servers
+                    {mode === "local" ? ", and for Macs with Apple silicon" : ""}. Not sure? Run <code>uname -m</code>:{" "}
+                    <code>x86_64</code> means x86-64, <code>aarch64</code> or <code>arm64</code> means arm64.
                   </p>
                   <p>Copy it to {mode === "https" ? "your server" : "a folder on your computer"}, then unpack it and load the image:</p>
                   <CodeBlock
                     title="Terminal"
                     language="bash"
-                    code={`unzip design-studio-server.zip
+                    code={`unzip design-studio-server-*.zip
 cd design-studio-server
 docker load -i design-studio-image.tar.gz
 cp .env.example .env
@@ -691,8 +698,8 @@ cd ../.. && docker compose --profile https up -d`}
             <ol className="sh-list">
               <li>Take a backup. Updates can change the database, and they can&rsquo;t be undone without one.</li>
               <li>
-                Download the new server bundle. Copy its <code>docker-compose.yml</code> and <code>Caddyfile</code> over
-                yours, and keep your <code>.env</code>.
+                Download the new server bundle for the same architecture. Copy its <code>docker-compose.yml</code> and{" "}
+                <code>Caddyfile</code> over yours, and keep your <code>.env</code>.
               </li>
               <li>Load the new image, set the version and restart:</li>
             </ol>
