@@ -1,6 +1,6 @@
 // Release details shown across the page. Update these when a new build ships.
 export const release = {
-  version: "0.1.0",
+  version: "0.1.1",
   mac: {
     label: "Download for Mac",
     href: "downloads/Design-Studio-mac.dmg",
@@ -17,8 +17,8 @@ export const release = {
   // in the app repository): the server image (docker load), compose file and settings template.
   server: {
     requirements: "Linux · Docker 24+",
-    amd64: { label: "Server bundle · x86-64", href: "downloads/design-studio-server-0.1.0-linux-amd64.zip" },
-    arm64: { label: "Server bundle · arm64", href: "downloads/design-studio-server-0.1.0-linux-arm64.zip" },
+    amd64: { label: "Server bundle · x86-64", href: "downloads/design-studio-server-0.1.1-linux-amd64.zip" },
+    arm64: { label: "Server bundle · arm64", href: "downloads/design-studio-server-0.1.1-linux-arm64.zip" },
   },
 } as const;
 
