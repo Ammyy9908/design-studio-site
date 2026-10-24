@@ -229,3 +229,20 @@ export function ServerMockup() {
   );
 }
 
+
+export function AskStudioMockup() {
+  return (
+    <div className="ask-art" role="img" aria-label="Illustration of Ask Studio drafting a document section from a prompt">
+      <div className="ask-art__prompt" aria-hidden="true">
+        <span>✦</span> Draft an executive summary…
+      </div>
+      <div className="ask-art__doc" aria-hidden="true">
+        <b />
+        <i style={{ width: "92%" }} />
+        <i style={{ width: "78%" }} />
+        <i style={{ width: "86%" }} />
+        <em />
+      </div>
+    </div>
+  );
+}

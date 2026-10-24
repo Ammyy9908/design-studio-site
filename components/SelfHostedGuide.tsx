@@ -11,13 +11,14 @@ import {
   MailIcon,
   RefreshIcon,
   ServerIcon,
+  SparkleIcon,
   ShieldIcon,
   TerminalIcon,
 } from "@/components/Icons";
 import { release } from "@/lib/site";
 
 type DeploymentMode = "https" | "local";
-type Tab = "quickstart" | "requirements" | "settings" | "desktop" | "email" | "maintenance";
+type Tab = "quickstart" | "requirements" | "settings" | "desktop" | "email" | "askstudio" | "maintenance";
 
 const settings = [
   {
@@ -91,6 +92,41 @@ const settings = [
     description: "Turns on “Continue with Google”. Create a Web application OAuth client with the redirect address <PUBLIC_URL>/api/auth/google/callback.",
   },
   {
+    name: "ASK_STUDIO_PROVIDER",
+    group: "ask",
+    required: false,
+    example: "openai",
+    description: "Turns on the Ask Studio writing assistant in Docs: anthropic, or openai for any OpenAI-compatible endpoint. Empty = off.",
+  },
+  {
+    name: "ASK_STUDIO_API_KEY",
+    group: "ask",
+    required: false,
+    example: "from your AI provider",
+    description: "Your own API key. It stays on the server and never reaches browsers or the desktop app. Optional for a local model with a custom base URL.",
+  },
+  {
+    name: "ASK_STUDIO_MODEL",
+    group: "ask",
+    required: false,
+    example: "gpt-4.1-mini",
+    description: "The model id to use. Required when a provider is set. A fast, small chat model is enough.",
+  },
+  {
+    name: "ASK_STUDIO_BASE_URL",
+    group: "ask",
+    required: false,
+    example: "http://host.docker.internal:11434/v1",
+    description: "API address for Ollama, vLLM or another gateway. Leave empty for OpenAI or Anthropic themselves.",
+  },
+  {
+    name: "ASK_STUDIO_RATE_PER_HOUR / _MAX_OUTPUT_TOKENS / _TIMEOUT_SECONDS",
+    group: "ask",
+    required: false,
+    example: "20 / 2000 / 60",
+    description: "Limits: requests per person per hour, answer length, and seconds before giving up (at most 110).",
+  },
+  {
     name: "DATABASE_URL",
     group: "external",
     required: false,
@@ -126,6 +162,7 @@ const settingGroups = [
   { id: "secrets", label: "Secrets" },
   { id: "email", label: "Email" },
   { id: "signin", label: "Google sign-in" },
+  { id: "ask", label: "Ask Studio" },
   { id: "external", label: "Your own database & storage" },
 ];
 
@@ -135,6 +172,7 @@ const tabs: { id: Tab; label: string; icon: typeof TerminalIcon }[] = [
   { id: "settings", label: "Settings (.env)", icon: KeyIcon },
   { id: "desktop", label: "Desktop app", icon: AppleIcon },
   { id: "email", label: "Email", icon: MailIcon },
+  { id: "askstudio", label: "Ask Studio (AI)", icon: SparkleIcon },
   { id: "maintenance", label: "Backups & updates", icon: RefreshIcon },
 ];
 
@@ -638,6 +676,70 @@ docker compose logs studio | grep -i "send email"`}
               code={`docker compose exec postgres psql -U studio -d studio \\
   -c "UPDATE users SET email_verified_at = now() WHERE email = 'person@example.com';"`}
             />
+          </div>
+        </section>
+      )}
+
+      {/* ── Ask Studio ────────────────────────────────────── */}
+      {activeTab === "askstudio" && (
+        <section className="sh-section" aria-labelledby="ask-title">
+          <div className="sh-card">
+            <div className="sh-card__header">
+              <span className="sh-badge sh-badge--violet">Ask Studio</span>
+              <h2 id="ask-title" className="sh-card__title">AI writing assistant, on your own key</h2>
+              <p className="sh-card__sub">
+                Ask Studio drafts text in Docs from a prompt. It runs on an AI model that <strong>you</strong> provide, so
+                no key or vendor is built in. It stays off until you add a key.
+              </p>
+            </div>
+
+            <div className="sh-callout sh-callout--warning">
+              <strong>Prompts go to your AI provider.</strong> Everything people type into Ask Studio is sent to the
+              provider you configure, and so is the document&rsquo;s text (up to 12,000 characters) when they tick
+              &ldquo;Use this document as context&rdquo;. Design Studio doesn&rsquo;t store prompts or answers. For full
+              control, point it at a model on your own network.
+            </div>
+
+            <h3>1. Choose a provider</h3>
+            <p>
+              <code>anthropic</code> uses Anthropic&rsquo;s API. <code>openai</code> works with OpenAI and anything that
+              speaks the same format: Azure-style gateways, Ollama, vLLM, LiteLLM or OpenRouter. Create an API key with
+              your provider and pick a model. A fast, small chat model is plenty for drafting; for OpenAI,{" "}
+              <code>gpt-4.1-mini</code> works well.
+            </p>
+
+            <h3>2. Add it to .env</h3>
+            <CodeBlock
+              title=".env"
+              language="dotenv"
+              code={`ASK_STUDIO_PROVIDER=openai          # or: anthropic
+ASK_STUDIO_API_KEY=<your provider key>
+ASK_STUDIO_MODEL=gpt-4.1-mini
+# For Ollama, vLLM or a gateway (the key is then optional):
+# ASK_STUDIO_BASE_URL=http://host.docker.internal:11434/v1`}
+            />
+
+            <h3>3. Apply and try it</h3>
+            <CodeBlock
+              title="Terminal"
+              language="bash"
+              code={`docker compose up -d studio
+
+# A wrong setting stops the server at start; the reason is in the log:
+docker compose logs studio | tail`}
+            />
+            <p>
+              Open a Doc, choose <strong>Ask Studio</strong> and write a prompt. Without a key, the dialog says Ask Studio
+              isn&rsquo;t set up on this server.
+            </p>
+
+            <h3>Limits and controls</h3>
+            <ul>
+              <li>Only signed-in people with a verified email can use it.</li>
+              <li>20 requests per person per hour by default, so you control the bill (<code>ASK_STUDIO_RATE_PER_HOUR</code>).</li>
+              <li>Prompts up to 4,000 characters, answers up to 2,000 tokens, and a 60 second timeout, all adjustable.</li>
+              <li>If the provider rejects your key or model, people see a generic message and the details appear in <code>docker compose logs studio</code>.</li>
+            </ul>
           </div>
         </section>
       )}

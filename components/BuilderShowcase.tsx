@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BrowserFrame, PhoneFrame, MotionMockup, PublishMockup } from "./Mockups";
 
-type Step = { title: string; body: string; points: string[]; visual: ReactNode };
+export type Step = { title: string; body: string; points: string[]; visual: ReactNode };
 
 const steps: Step[] = [
   {
@@ -56,8 +56,12 @@ const steps: Step[] = [
   },
 ];
 
-/** Scroll-driven feature walkthrough: steps scroll on the left while the matching visual stays pinned. */
 export function BuilderShowcase() {
+  return <ScrollSteps steps={steps} />;
+}
+
+/** Scroll-driven feature walkthrough: steps scroll on the left while the matching visual stays pinned. */
+export function ScrollSteps({ steps }: { steps: Step[] }) {
   const [active, setActive] = useState(0);
   const refs = useRef<Array<HTMLLIElement | null>>([]);
 

@@ -1,8 +1,9 @@
+import { AskStudioShowcase } from "@/components/AskStudioShowcase";
 import { BuilderShowcase } from "@/components/BuilderShowcase";
 import { DownloadButtons } from "@/components/DownloadButtons";
 import { FormatShowcase } from "@/components/FormatShowcase";
 import { AppleIcon, WindowsIcon, DownloadIcon, Logo, ArrowRightIcon } from "@/components/Icons";
-import { AssetsMockup, BrowserArt, BrowserFrame, CommentsMockup, OfflineArt, ServerMockup, Stickers } from "@/components/Mockups";
+import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, CommentsMockup, OfflineArt, ServerMockup, Stickers } from "@/components/Mockups";
 import { PageEffects } from "@/components/PageEffects";
 import { navLinks, release } from "@/lib/site";
 
@@ -58,6 +59,10 @@ const faqs = [
   {
     q: "Can I host the backend on my own servers?",
     a: "Yes. Design Studio's server comes as one Docker Compose bundle with its own database, file storage and automatic HTTPS, so you can run it on any Linux machine and keep your team's work on your own infrastructure. The Self-Hosted Guide walks you through it.",
+  },
+  {
+    q: "Does Design Studio include AI writing?",
+    a: "Ask Studio drafts text in Docs, but it runs on an AI model you provide: your own key for OpenAI, Anthropic or a model on your own network. The key stays on your server and the feature is off until you add one. What people type is sent to the provider you choose. The Self-Hosted Guide shows how to set it up.",
   },
 ];
 
@@ -132,6 +137,19 @@ export default function Home() {
               </p>
             </div>
             <BuilderShowcase />
+          </div>
+        </section>
+
+        {/* ── Ask Studio ───────────────────────────────────── */}
+        <section className="section" id="ask-studio" aria-labelledby="ask-title">
+          <div className="container">
+            <div className="section__intro reveal">
+              <h2 id="ask-title" className="section__title">Ask Studio: write with AI, on your own key</h2>
+              <p className="section__sub">
+                Describe what you need and get a draft in your Doc. You pick the AI model, and your key stays on your server.
+              </p>
+            </div>
+            <AskStudioShowcase />
           </div>
         </section>
 
@@ -213,6 +231,18 @@ export default function Home() {
                   </a>
                 </div>
                 <ServerMockup />
+              </article>
+              <article className="bcard bcard--violet reveal" id="ask-studio-card">
+                <div className="bcard__text">
+                  <h3>Write faster with Ask Studio</h3>
+                  <p>Draft summaries, proposals and notes right in a Doc. Bring your own AI key: it stays on your server, and it&rsquo;s off until you add one.</p>
+                </div>
+                <ul className="ask-models" aria-label="Supported AI providers">
+                  {["Anthropic", "OpenAI", "Ollama", "vLLM", "Any OpenAI-compatible API"].map((m) => (
+                    <li key={m}>{m}</li>
+                  ))}
+                </ul>
+                <AskStudioMockup />
               </article>
             </div>
           </div>
