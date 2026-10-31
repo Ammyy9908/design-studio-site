@@ -18,7 +18,20 @@ import {
 import { release } from "@/lib/site";
 
 type DeploymentMode = "https" | "local";
-type Tab = "quickstart" | "requirements" | "settings" | "desktop" | "email" | "askstudio" | "maintenance";
+type Host = "compose" | "kubernetes" | "process";
+type Tab =
+  | "quickstart"
+  | "proxy"
+  | "database"
+  | "k8s-one"
+  | "k8s-many"
+  | "process"
+  | "requirements"
+  | "settings"
+  | "desktop"
+  | "email"
+  | "askstudio"
+  | "maintenance";
 
 const settings = [
   {
@@ -127,6 +140,34 @@ const settings = [
     description: "Limits: requests per person per hour, answer length, and seconds before giving up (at most 110).",
   },
   {
+    name: "ASK_STUDIO_IMAGES_PROVIDER / ASK_STUDIO_IMAGES_API_KEY",
+    group: "ask",
+    required: false,
+    example: "pexels / from pexels.com/api",
+    description: "Stock photos (pexels or unsplash) for AI-made websites and for Replace image. Empty = off. A few search words go to the provider; never your description or documents.",
+  },
+  {
+    name: "IMAGE_GENERATION_PROVIDER",
+    group: "ask",
+    required: false,
+    example: "openai",
+    description: "Turns on AI pictures in Replace image: openai or gemini. Empty = off. What people type is sent to this provider.",
+  },
+  {
+    name: "IMAGE_GENERATION_API_KEY",
+    group: "ask",
+    required: false,
+    example: "from your provider",
+    description: "Your own key for the image provider. It stays on the server. Required when IMAGE_GENERATION_PROVIDER is set.",
+  },
+  {
+    name: "IMAGE_GENERATION_MODELS / _PER_HOUR / _TIMEOUT_SECONDS",
+    group: "ask",
+    required: false,
+    example: "(the key's image models) / 20 / 90",
+    description: "Which models people can choose (empty = the image models your key can use), pictures per person per hour, and seconds before giving up.",
+  },
+  {
     name: "DATABASE_URL",
     group: "external",
     required: false,
@@ -148,6 +189,22 @@ const settings = [
     description: "Keep true when Design Studio runs behind the included HTTPS proxy, a load balancer or a tunnel. Set false only if visitors reach the server directly.",
   },
   {
+    name: "REALTIME_URL",
+    group: "realtime",
+    required: false,
+    example: "(empty = inside the server)",
+    description:
+      "Leave empty and the WebSocket for cursors and presence runs inside the Design Studio server. Set a private address such as http://realtime:8090 only when several server copies share one WebSocket process.",
+  },
+  {
+    name: "REALTIME_SECRET",
+    group: "realtime",
+    required: false,
+    example: "openssl rand -hex 32",
+    description:
+      "Shared secret for that separate WebSocket process. At least 32 characters, and the same value on the server and on the WebSocket process. Unused while REALTIME_URL is empty.",
+  },
+  {
     name: "STUDIO_VERSION",
     group: "general",
     required: false,
@@ -164,10 +221,10 @@ const settingGroups = [
   { id: "signin", label: "Google sign-in" },
   { id: "ask", label: "Ask Studio" },
   { id: "external", label: "Your own database & storage" },
+  { id: "realtime", label: "WebSocket" },
 ];
 
-const tabs: { id: Tab; label: string; icon: typeof TerminalIcon }[] = [
-  { id: "quickstart", label: "Quick start", icon: TerminalIcon },
+const sharedTabs: { id: Tab; label: string; icon: typeof TerminalIcon }[] = [
   { id: "requirements", label: "Requirements", icon: CpuIcon },
   { id: "settings", label: "Settings (.env)", icon: KeyIcon },
   { id: "desktop", label: "Desktop app", icon: AppleIcon },
@@ -176,23 +233,56 @@ const tabs: { id: Tab; label: string; icon: typeof TerminalIcon }[] = [
   { id: "maintenance", label: "Backups & updates", icon: RefreshIcon },
 ];
 
+const tabsFor: Record<Host, { id: Tab; label: string; icon: typeof TerminalIcon }[]> = {
+  compose: [
+    { id: "quickstart", label: "Quick start", icon: TerminalIcon },
+    { id: "proxy", label: "Your proxy", icon: ShieldIcon },
+    { id: "database", label: "Your database", icon: DatabaseIcon },
+    ...sharedTabs,
+  ],
+  kubernetes: [
+    { id: "k8s-one", label: "One server", icon: ServerIcon },
+    { id: "k8s-many", label: "Several servers", icon: CpuIcon },
+    ...sharedTabs,
+  ],
+  process: [{ id: "process", label: "Install", icon: TerminalIcon }, ...sharedTabs],
+};
+
+const defaultTab: Record<Host, Tab> = {
+  compose: "quickstart",
+  kubernetes: "k8s-one",
+  process: "process",
+};
+
 export function SelfHostedGuide() {
+  const [host, setHost] = useState<Host>("compose");
   const [mode, setMode] = useState<DeploymentMode>("https");
   const [activeTab, setActiveTab] = useState<Tab>("quickstart");
   const [group, setGroup] = useState<string>("all");
 
+  const tabs = tabsFor[host];
   const shownSettings = settings.filter((s) => group === "all" || s.group === group);
   const url = mode === "https" ? "https://studio.example.com" : "http://localhost:8080";
+
+  function chooseHost(next: Host) {
+    setHost(next);
+    setActiveTab((current) => (tabsFor[next].some((tab) => tab.id === current) ? current : defaultTab[next]));
+  }
 
   return (
     <div className="sh-guide">
       {/* ── Deployment mode ───────────────────────────────── */}
       <div className="sh-mode-banner">
         <div className="sh-mode-banner__inner">
-          <div className="sh-mode-banner__text">
-            <strong>Setting up:</strong>
-            <span>{mode === "https" ? "A server for your team, on your own domain with HTTPS" : "A quick trial on one computer"}</span>
-          </div>
+          <label className="sh-host">
+            <span className="sh-host__label">Guide</span>
+            <select className="sh-host__select" value={host} onChange={(event) => chooseHost(event.target.value as Host)} aria-label="Self-host guide">
+              <option value="compose">Docker Compose</option>
+              <option value="kubernetes">Kubernetes</option>
+              <option value="process">A process on the machine</option>
+            </select>
+          </label>
+          {host === "compose" ? (
           <div className="sh-mode-pills" role="radiogroup" aria-label="Deployment mode">
             <button
               type="button"
@@ -213,6 +303,13 @@ export function SelfHostedGuide() {
               <TerminalIcon className="sh-mode-pill__icon" /> Try it locally
             </button>
           </div>
+          ) : (
+            <p className="sh-host__note">
+              {host === "kubernetes"
+                ? "One cluster. Use One server for a single pod, or Several servers when the API should scale."
+                : "Build the server from source and run it under systemd, next to PostgreSQL and file storage."}
+            </p>
+          )}
         </div>
       </div>
 
@@ -245,6 +342,12 @@ export function SelfHostedGuide() {
                   ? "Run Design Studio on a Linux server with your own domain. HTTPS certificates are issued and renewed automatically."
                   : "Run everything on your own computer at localhost:8080. No domain needed, and verification emails appear in the server log."}
               </p>
+            </div>
+
+            <div className="sh-callout sh-callout--info">
+              <strong>This guide is the Docker Compose bundle.</strong> A proxy you already run is the Your proxy tab. A
+              database and bucket you already have are the Your database tab. Kubernetes and a process install are in
+              the Guide menu above.
             </div>
 
             <div className="sh-steps">
@@ -437,6 +540,361 @@ docker compose ps`
         </section>
       )}
 
+      {/* ── Compose: your proxy ──────────────────────────── */}
+      {activeTab === "proxy" && (
+        <section className="sh-section" aria-labelledby="proxy-title">
+          <div className="sh-card">
+            <div className="sh-card__header">
+              <span className="sh-badge sh-badge--mint">Docker Compose</span>
+              <h2 id="proxy-title" className="sh-card__title">Behind your own proxy</h2>
+              <p className="sh-card__sub">
+                Use this when nginx, Traefik, Caddy or a Cloudflare tunnel already terminates HTTPS. Compose still runs
+                the server, PostgreSQL and MinIO. The WebSocket stays inside the server, at <code>/ws</code>.
+              </p>
+            </div>
+            <div className="sh-steps">
+              <div className="sh-step">
+                <div className="sh-step__num">1</div>
+                <div className="sh-step__content">
+                  <h3>Start without the HTTPS profile</h3>
+                  <p>
+                    Follow Quick start through the <code>.env</code> file, then leave out <code>--profile https</code>.
+                    Compose does not publish ports 80 and 443. The server stays on <code>127.0.0.1:8080</code>. Set{" "}
+                    <code>TRUST_PROXY=true</code>.
+                  </p>
+                  <CodeBlock
+                    title="Terminal"
+                    language="bash"
+                    code={`docker compose up -d
+docker compose ps`}
+                  />
+                </div>
+              </div>
+              <div className="sh-step">
+                <div className="sh-step__num">2</div>
+                <div className="sh-step__content">
+                  <h3>Forward HTTPS to the server</h3>
+                  <p>
+                    Point the proxy at <code>http://127.0.0.1:8080</code>. Pass WebSocket upgrades for <code>/ws</code>{" "}
+                    through, and leave that connection open. The server pings it every 25 seconds. Podman can run the
+                    same Compose file.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Compose: your database ────────────────────────── */}
+      {activeTab === "database" && (
+        <section className="sh-section" aria-labelledby="db-title">
+          <div className="sh-card">
+            <div className="sh-card__header">
+              <span className="sh-badge sh-badge--mint">Docker Compose image</span>
+              <h2 id="db-title" className="sh-card__title">Your own database and storage</h2>
+              <p className="sh-card__sub">
+                Run only the Design Studio container. Point it at a PostgreSQL and an S3-compatible bucket you already
+                have: Amazon S3, Cloudflare R2, Garage, or a MinIO of your own. The WebSocket stays inside the
+                container.
+              </p>
+            </div>
+            <div className="sh-steps">
+              <div className="sh-step">
+                <div className="sh-step__num">1</div>
+                <div className="sh-step__content">
+                  <h3>Load the image from the zip</h3>
+                  <p>
+                    The Compose file in the download always starts its own Postgres and MinIO and waits for them. This
+                    guide runs the image by itself. The server creates the bucket if it can. Replace the secrets and
+                    addresses below.
+                  </p>
+                  <CodeBlock
+                    title="Terminal"
+                    language="bash"
+                    code={`docker load -i design-studio-image.tar.gz
+docker run -d --name studio --restart unless-stopped \\
+  -p 127.0.0.1:8080:8080 \\
+  -e LISTEN_ADDR=0.0.0.0:8080 \\
+  -e PUBLIC_URL=https://studio.example.com \\
+  -e TRUST_PROXY=true \\
+  -e SESSION_SECRET="$(openssl rand -hex 32)" \\
+  -e DATABASE_URL='postgres://studio:PASSWORD@db.internal:5432/studio?sslmode=require' \\
+  -e S3_ENDPOINT=s3.amazonaws.com \\
+  -e S3_ACCESS_KEY=YOUR_ACCESS_KEY \\
+  -e S3_SECRET_KEY=YOUR_SECRET_KEY \\
+  -e S3_BUCKET=design-studio \\
+  -e S3_USE_SSL=true \\
+  design-studio:${release.version}`}
+                  />
+                </div>
+              </div>
+              <div className="sh-step">
+                <div className="sh-step__num">2</div>
+                <div className="sh-step__content">
+                  <h3>Put your proxy in front</h3>
+                  <p>
+                    Forward HTTPS to <code>127.0.0.1:8080</code> and pass <code>/ws</code> through. Email, Google
+                    sign-in and Ask Studio use the same variables as the Compose install. See Settings.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Kubernetes: one server ────────────────────────── */}
+      {activeTab === "k8s-one" && (
+        <section className="sh-section" aria-labelledby="k8s-one-title">
+          <div className="sh-card">
+            <div className="sh-card__header">
+              <span className="sh-badge sh-badge--blue">Kubernetes</span>
+              <h2 id="k8s-one-title" className="sh-card__title">One server pod</h2>
+              <p className="sh-card__sub">
+                One studio pod, one Postgres, and object storage. Leave <code>REALTIME_URL</code> empty. The WebSocket,
+                Live Q&amp;A and the phone remote all stay on that pod. No Helm chart ships with Design Studio.
+              </p>
+            </div>
+            <div className="sh-steps">
+              <div className="sh-step">
+                <div className="sh-step__num">1</div>
+                <div className="sh-step__content">
+                  <h3>Load the image where the cluster can run it</h3>
+                  <p>
+                    The download is <code>design-studio-image.tar.gz</code> inside the server zip. Load it on the node,
+                    or push <code>design-studio:{release.version}</code> to a registry the cluster pulls from.
+                  </p>
+                  <CodeBlock title="Terminal" language="bash" code={`docker load -i design-studio-image.tar.gz`} />
+                </div>
+              </div>
+              <div className="sh-step">
+                <div className="sh-step__num">2</div>
+                <div className="sh-step__content">
+                  <h3>Run Postgres and a bucket</h3>
+                  <p>
+                    Use PostgreSQL and MinIO in the cluster, or a managed database and S3, R2 or Garage. The server
+                    needs <code>DATABASE_URL</code>, <code>S3_ENDPOINT</code> and the bucket. It creates the bucket if
+                    it can.
+                  </p>
+                </div>
+              </div>
+              <div className="sh-step">
+                <div className="sh-step__num">3</div>
+                <div className="sh-step__content">
+                  <h3>Run one studio pod</h3>
+                  <CodeBlock
+                    title="studio.yaml"
+                    language="yaml"
+                    code={`apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: studio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: studio
+  template:
+    metadata:
+      labels:
+        app: studio
+    spec:
+      containers:
+        - name: studio
+          image: design-studio:${release.version}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: LISTEN_ADDR
+              value: 0.0.0.0:8080
+            - name: PUBLIC_URL
+              value: https://studio.example.com
+            - name: TRUST_PROXY
+              value: "true"
+            - name: SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: studio
+                  key: session-secret
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: studio
+                  key: database-url
+            - name: S3_ENDPOINT
+              value: minio:9000
+            - name: S3_USE_SSL
+              value: "false"
+            - name: S3_BUCKET
+              value: design-studio`}
+                  />
+                </div>
+              </div>
+              <div className="sh-step">
+                <div className="sh-step__num">4</div>
+                <div className="sh-step__content">
+                  <h3>Send traffic to the pod</h3>
+                  <p>
+                    A Service on port 8080, then an ingress that terminates HTTPS and passes the <code>/ws</code>{" "}
+                    upgrade. Leave that connection open. The server pings every 25 seconds. Keep port 8080 off the
+                    public internet.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Kubernetes: several servers ───────────────────── */}
+      {activeTab === "k8s-many" && (
+        <section className="sh-section" aria-labelledby="k8s-many-title">
+          <div className="sh-card">
+            <div className="sh-card__header">
+              <span className="sh-badge sh-badge--blue">Kubernetes</span>
+              <h2 id="k8s-many-title" className="sh-card__title">Several server pods</h2>
+              <p className="sh-card__sub">
+                Scale the studio Deployment for designs, accounts, photos and publish. Cursors and presence stay on one
+                realtime pod. Start from the One server guide, then add the pieces below.
+              </p>
+            </div>
+            <div className="sh-steps">
+              <div className="sh-step">
+                <div className="sh-step__num">1</div>
+                <div className="sh-step__content">
+                  <h3>Run one realtime pod</h3>
+                  <p>
+                    Same image, command <code>/usr/local/bin/studio-realtime</code>, one replica. Give it and every
+                    studio pod the same <code>REALTIME_SECRET</code> of at least 32 characters. A second realtime pod
+                    would show cursors only to the people connected to it.
+                  </p>
+                  <CodeBlock
+                    title="realtime.yaml"
+                    language="yaml"
+                    code={`apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realtime
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: realtime
+  template:
+    metadata:
+      labels:
+        app: realtime
+    spec:
+      containers:
+        - name: realtime
+          image: design-studio:${release.version}
+          command: ["/usr/local/bin/studio-realtime"]
+          ports:
+            - containerPort: 8090
+          env:
+            - name: LISTEN_ADDR
+              value: 0.0.0.0:8090
+            - name: REALTIME_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: studio
+                  key: realtime-secret`}
+                  />
+                </div>
+              </div>
+              <div className="sh-step">
+                <div className="sh-step__num">2</div>
+                <div className="sh-step__content">
+                  <h3>Point every studio pod at it</h3>
+                  <p>
+                    Set <code>REALTIME_URL=http://realtime:8090</code> on the studio Deployment, then raise{" "}
+                    <code>replicas</code>. Each studio pod proxies <code>/ws</code> to that one realtime pod. Browsers
+                    still open <code>wss://studio.example.com/ws</code>. Keep port 8090 inside the cluster.
+                  </p>
+                  <ul className="sh-list">
+                    <li>The ingress must pass the WebSocket upgrade and leave the connection open.</li>
+                    <li>
+                      Live Q&amp;A and the phone remote stay in memory on the studio pod that created them. Those two
+                      features are correct while studio has one replica. With several studio replicas, designs and the
+                      WebSocket keep working, and those two features do not.
+                    </li>
+                    <li>
+                      Postgres stays one primary. The server writes through a single <code>DATABASE_URL</code>. One
+                      MinIO pod does not grow sideways. Distributed MinIO, S3 or R2 does.
+                    </li>
+                    <li>
+                      Hourly limits for Ask Studio and image generation are counted on each studio pod. A person whose
+                      requests land on different pods can go past the cap you set.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Process ───────────────────────────────────────── */}
+      {activeTab === "process" && (
+        <section className="sh-section" aria-labelledby="process-title">
+          <div className="sh-card">
+            <div className="sh-card__header">
+              <span className="sh-badge sh-badge--sun">On the machine</span>
+              <h2 id="process-title" className="sh-card__title">Run the server as a process</h2>
+              <p className="sh-card__sub">
+                The download zip is a Docker image. This guide builds the server from the source repository and runs it
+                under systemd, next to PostgreSQL and MinIO or S3. The WebSocket is part of this process.
+              </p>
+            </div>
+            <div className="sh-steps">
+              <div className="sh-step">
+                <div className="sh-step__num">1</div>
+                <div className="sh-step__content">
+                  <h3>Build the web app and the server</h3>
+                  <CodeBlock
+                    title="Terminal"
+                    language="bash"
+                    code={`# web app
+npx vite build --config vite.web.config.ts
+
+# server
+cd server
+CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o studio-server ./cmd/server`}
+                  />
+                </div>
+              </div>
+              <div className="sh-step">
+                <div className="sh-step__num">2</div>
+                <div className="sh-step__content">
+                  <h3>Start it beside Postgres and file storage</h3>
+                  <p>
+                    Put the same variables in a systemd unit. Migrations run when the process starts. Put your proxy in
+                    front of port 8080 and pass <code>/ws</code> through.
+                  </p>
+                  <CodeBlock
+                    title="Terminal"
+                    language="bash"
+                    code={`LISTEN_ADDR=127.0.0.1:8080 \\
+PUBLIC_URL=https://studio.example.com \\
+TRUST_PROXY=true \\
+WEB_DIR=/var/lib/design-studio/web \\
+SESSION_SECRET="$(openssl rand -hex 32)" \\
+DATABASE_URL='postgres://studio:PASSWORD@127.0.0.1:5432/studio?sslmode=disable' \\
+S3_ENDPOINT=127.0.0.1:9000 \\
+S3_ACCESS_KEY=studio \\
+S3_SECRET_KEY=YOUR_SECRET_KEY \\
+S3_BUCKET=design-studio \\
+S3_USE_SSL=false \\
+./studio-server`}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── Requirements ──────────────────────────────────── */}
       {activeTab === "requirements" && (
         <section className="sh-section" aria-labelledby="req-title">
@@ -445,8 +903,11 @@ docker compose ps`
               <span className="sh-badge sh-badge--blue">Before you start</span>
               <h2 id="req-title" className="sh-card__title">Server requirements</h2>
               <p className="sh-card__sub">
-                The bundle runs the Design Studio server together with its own database and file storage, so one machine is
-                all you need. Your designs, photos and accounts stay on it.
+                {host === "kubernetes"
+                  ? "A cluster that can run the Design Studio image, plus PostgreSQL and S3-compatible storage. Your designs, photos and accounts stay there."
+                  : host === "process"
+                    ? "A Linux machine with Go and Node for the build, plus PostgreSQL and S3-compatible storage beside the process."
+                    : "The bundle runs the Design Studio server together with its own database and file storage, so one machine is all you need. Your designs, photos and accounts stay on it."}
               </p>
             </div>
 
@@ -454,7 +915,13 @@ docker compose ps`
               <div className="sh-spec-card">
                 <ServerIcon className="sh-spec-card__icon" />
                 <h4>Operating system</h4>
-                <p>Linux (x86-64 or arm64) with Docker Engine 24+ and the Compose plugin v2.20+.</p>
+                <p>
+                  {host === "kubernetes"
+                    ? "Any cluster that runs Linux images (x86-64 or arm64). Load the image from the server zip, or pull it from your registry."
+                    : host === "process"
+                      ? "Linux (x86-64 or arm64) with Go and Node.js to build the server. Docker is not required."
+                      : "Linux (x86-64 or arm64) with Docker Engine 24+ and the Compose plugin v2.20+."}
+                </p>
               </div>
               <div className="sh-spec-card">
                 <CpuIcon className="sh-spec-card__icon" />
@@ -477,8 +944,18 @@ docker compose ps`
             </div>
 
             <div className="sh-callout sh-callout--info">
-              <strong>Using your own database or storage?</strong> You can point Design Studio at a managed PostgreSQL
-              database and any S3-compatible storage instead of the included ones. See the Settings tab.
+              <strong>
+                {host === "kubernetes"
+                  ? "One pod or several."
+                  : host === "process"
+                    ? "Same settings as the other guides."
+                    : "Already have a proxy or a database?"}
+              </strong>{" "}
+              {host === "kubernetes"
+                ? "One server keeps the WebSocket, Live Q&A and the phone remote together. Several servers is its own tab."
+                : host === "process"
+                  ? "Email, Ask Studio and the desktop app use the Settings tab."
+                  : "Your proxy and Your database are their own tabs in this guide. Kubernetes is in the Guide menu."}
             </div>
           </div>
         </section>
@@ -740,6 +1217,44 @@ docker compose logs studio | tail`}
               <li>Prompts up to 4,000 characters, answers up to 2,000 tokens, and a 60 second timeout, all adjustable.</li>
               <li>If the provider rejects your key or model, people see a generic message and the details appear in <code>docker compose logs studio</code>.</li>
             </ul>
+
+            <h3>AI Builder for websites</h3>
+            <p>
+              The same key powers <strong>Home &rsaquo; Website &rsaquo; AI Builder</strong>. People describe the business and
+              Studio plans the sitemap, picks a layout for each section, writes the copy, chooses a look and builds the site
+              in the editor, one step after another. Each step is a separate request, about six of a person&rsquo;s hourly
+              requests in all. Use a capable model for this (for OpenAI, <code>gpt-4.1</code> or better) and keep{" "}
+              <code>ASK_STUDIO_TIMEOUT_SECONDS</code> at 60 or higher. Templates and a blank page need no key.
+            </p>
+
+            <h3>Pictures: stock photos and AI images</h3>
+            <p>
+              Select a picture and choose <strong>Replace</strong>: people can pick one of their own assets, search stock
+              photos, or make a picture from a description.
+            </p>
+            <CodeBlock
+              title=".env"
+              language="dotenv"
+              code={`# Stock photos (also fill the picture frames of AI-made websites)
+ASK_STUDIO_IMAGES_PROVIDER=pexels   # or: unsplash
+ASK_STUDIO_IMAGES_API_KEY=<your Pexels or Unsplash key>
+
+# Pictures from a description
+IMAGE_GENERATION_PROVIDER=openai    # or: gemini
+IMAGE_GENERATION_API_KEY=<your provider key>
+# IMAGE_GENERATION_MODELS=gpt-image-1,dall-e-3   # empty = the image models your key can use`}
+            />
+            <div className="sh-callout sh-callout--warning">
+              <strong>Descriptions go to your image provider, which bills you.</strong> What people type into AI image is sent
+              to OpenAI or Google (whichever you chose); nothing else is. Stock photo searches send a few words to Pexels or
+              Unsplash. Keys stay on the server. Each person gets 20 pictures per hour by default, only signed-in people with
+              a verified email can use it, and provider errors appear in the server log, never to people.
+            </div>
+            <p>
+              When you set <code>IMAGE_GENERATION_PROVIDER</code>, the dialog lists the image models your key can use (for OpenAI,{" "}
+              <code>gpt-image-1</code> and <code>dall-e-3</code>; for Gemini, its image models and Imagen) and people choose one.
+              Without a key the option shows &ldquo;Not set up on this server&rdquo;.
+            </p>
           </div>
         </section>
       )}

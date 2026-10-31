@@ -130,6 +130,21 @@ export function PublishMockup() {
   );
 }
 
+export function ReplaceImageMockup() {
+  return (
+    <div className="replace" role="img" aria-label="Illustration of the Replace image window with three tabs: your assets, stock photos and AI image. The AI image tab shows a model, a description and a generated picture">
+      <b className="replace__title">Replace image</b>
+      <span className="replace__tabs"><i>Your assets</i><i>Pexels</i><i className="is-on">AI image</i></span>
+      <span className="replace__field"><em>Model</em><i>GPT Image 1</i></span>
+      <span className="replace__field"><em>Describe the picture</em><i>A hand-blown glass lamp on an oak table, warm morning light</i></span>
+      <span className="replace__row">
+        <img src="assets/tpl-studio.webp" alt="" loading="lazy" decoding="async" />
+        <span className="replace__btn">Use this picture</span>
+      </span>
+    </div>
+  );
+}
+
 export function CommentsMockup() {
   return (
     <div className="collab" role="img" aria-label="Illustration of two people editing a slide together, with name tags on their cursors and a comment thread beside it">

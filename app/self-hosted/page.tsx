@@ -7,10 +7,11 @@ import { navLinks, release } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Self-Hosted Guide — Design Studio",
   description:
-    "Run Design Studio on your own server: your designs, photos and accounts stay on your infrastructure. One Docker Compose bundle with automatic HTTPS.",
+    "Run Design Studio on your own server. The usual install is Docker Compose. The same server also runs behind your own proxy, with your own database and storage, as a process, or on Kubernetes.",
   openGraph: {
     title: "Design Studio — Self-Hosted Guide",
-    description: "Run Design Studio on your own server with one Docker Compose bundle and automatic HTTPS.",
+    description:
+      "Self-host Design Studio with Docker Compose, your own proxy, your own database and storage, a system process, or Kubernetes.",
     type: "article",
   },
 };
@@ -55,14 +56,15 @@ export default function SelfHostedPage() {
             <div className="sh-hero__badge-row reveal">
               <span className="sh-badge sh-badge--violet">Self-Hosted</span>
               <span className="sh-badge sh-badge--mint">Docker Compose</span>
+              <span className="sh-badge sh-badge--blue">Kubernetes</span>
             </div>
-            <h1 id="sh-hero-title" className="sh-hero__title reveal">
+            <h1 id="sh-hero-title" className="sh-hero__title reveal" data-reveal="scale">
               Run Design Studio on Your Own Server
             </h1>
             <p className="sh-hero__lead reveal">
-              Keep your team&rsquo;s designs, photos and accounts on your own infrastructure. Design Studio&rsquo;s server
-              comes as one Docker Compose bundle, with its own database, file storage and automatic HTTPS, so a single
-              Linux machine is all you need.
+              Keep your team&rsquo;s designs, photos and accounts on your own infrastructure. The usual install is one
+              Docker Compose bundle, with its own database, file storage and automatic HTTPS. The same server also runs
+              behind your own proxy, next to a database you already have, as a normal process, or on Kubernetes.
             </p>
 
             {/* Spec Bar */}

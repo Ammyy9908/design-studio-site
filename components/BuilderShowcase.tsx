@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { BrowserFrame, PhoneFrame, MotionMockup, PublishMockup } from "./Mockups";
+import { BrowserFrame, PhoneFrame, MotionMockup, PublishMockup, ReplaceImageMockup } from "./Mockups";
 
 export type Step = { title: string; body: string; points: string[]; visual: ReactNode };
 
 const steps: Step[] = [
   {
-    title: "Pick a template you like",
-    body: "Start from a finished website for a salon, a photographer, a designer portfolio, a creative studio or an event — real pages with real sections, not empty boxes.",
-    points: ["Home, about, services, gallery, contact and more", "Swap in your own words and photos"],
+    title: "Start your way: AI, a template or a blank page",
+    body: "Describe the business and AI Builder plans the sitemap, lays the sections out as a wireframe, chooses a look and builds the site for you to edit. Or start from a finished template for a salon, a photographer, a portfolio or an event, or from a blank page.",
+    points: ["AI Builder: sitemap, wireframe, style, then your site (needs an AI key on your server)", "Templates and a blank page need nothing extra"],
     visual: (
       <div className="stack">
         <BrowserFrame url="ostra.studio" src="assets/tpl-studio.webp" alt="The Ostra creative studio website template, with a large OSTRA headline and arched windows illustration" />
@@ -30,6 +30,12 @@ const steps: Step[] = [
         alt="The Design Studio website editor: an outline of the page on the left, the page in the middle and style controls on the right"
       />
     ),
+  },
+  {
+    title: "Swap any picture in seconds",
+    body: "Select a picture and choose Replace: pick one of your own assets, search stock photos from Pexels or Unsplash, or describe a picture and let an AI image model make it. Or press Generate above the picture and describe a change: the AI makes a new version from the current picture, in the same shape and place. Stock photos and AI images use keys you add to your own server, and they stay off until you do.",
+    points: ["Your assets, stock photos or AI-made pictures", "Generate a new version of the current picture from a few words", "The new picture takes the old one's place and size"],
+    visual: <ReplaceImageMockup />,
   },
   {
     title: "Add a little motion",
@@ -66,16 +72,43 @@ export function ScrollSteps({ steps }: { steps: Step[] }) {
   const refs = useRef<Array<HTMLLIElement | null>>([]);
 
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.step));
+    let ticking = false;
+    let current = 0;
+    const update = () => {
+      ticking = false;
+      const mid = window.innerHeight * 0.46;
+      let next = 0;
+      let best = Number.POSITIVE_INFINITY;
+      refs.current.forEach((el, i) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const dist = Math.abs(rect.top + rect.height / 2 - mid);
+        if (dist < best) {
+          best = dist;
+          next = i;
         }
-      },
-      { rootMargin: "-40% 0px -50% 0px" },
-    );
-    refs.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
+      });
+      if (next !== current) {
+        current = next;
+        setActive(next);
+      }
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    update();
+    const targets: EventTarget[] = [window, document];
+    const scroller = document.scrollingElement;
+    if (scroller) targets.push(scroller);
+    if (document.body && document.body !== scroller) targets.push(document.body);
+    for (const target of targets) target.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      for (const target of targets) target.removeEventListener("scroll", onScroll, { capture: true });
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (

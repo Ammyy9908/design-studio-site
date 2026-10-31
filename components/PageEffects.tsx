@@ -2,9 +2,21 @@
 
 import { useEffect } from "react";
 
+/** Soft shapes that sit behind a section and move at different speeds. */
+export function Drift({ tone = "light" }: { tone?: "light" | "ink" }) {
+  return (
+    <div className={`drift drift--${tone}`} aria-hidden="true">
+      <span className="drift__orb drift__orb--a" data-parallax="0.16" />
+      <span className="drift__orb drift__orb--b" data-parallax="0.32" />
+      <span className="drift__orb drift__orb--c" data-parallax="-0.12" />
+      <span className="drift__ring" data-parallax="0.22" />
+    </div>
+  );
+}
+
 /**
  * Page-wide scroll behaviour, all progressive enhancement:
- * - `.reveal` elements fade in as they enter the viewport
+ * - `.reveal` elements enter as they reach the viewport, staggered among siblings
  * - the header gets a solid background once the page scrolls
  * - nav links highlight the section currently in view
  * - `[data-parallax]` elements drift at their own speed (skipped with reduced motion)
@@ -14,11 +26,26 @@ export function PageEffects() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const cleanups: Array<() => void> = [];
 
-    // Reveal on scroll
-    const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+    // Reveal on scroll. Siblings share a rising delay so a row arrives in sequence.
+    const reveals = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+    const byParent = new Map<HTMLElement, HTMLElement[]>();
+    for (const el of reveals) {
+      const parent = el.parentElement;
+      if (!parent) continue;
+      const group = byParent.get(parent) ?? [];
+      group.push(el);
+      byParent.set(parent, group);
+    }
+    for (const group of byParent.values()) {
+      group.forEach((el, index) => el.style.setProperty("--i", String(Math.min(index, 8))));
+    }
     if (reduced || !("IntersectionObserver" in window)) {
       reveals.forEach((el) => el.classList.add("is-in"));
     } else {
+      const showIfVisible = (el: HTMLElement) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight * 0.92) el.classList.add("is-in");
+      };
       const io = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
@@ -30,7 +57,10 @@ export function PageEffects() {
         },
         { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
       );
-      reveals.forEach((el) => io.observe(el));
+      reveals.forEach((el) => {
+        showIfVisible(el);
+        io.observe(el);
+      });
       cleanups.push(() => io.disconnect());
     }
 
@@ -66,8 +96,8 @@ export function PageEffects() {
       const vh = window.innerHeight;
       for (const el of parallax) {
         const speed = Number(el.dataset.parallax) || 0.1;
-        const rect = el.parentElement?.getBoundingClientRect();
-        if (!rect || rect.bottom < -200 || rect.top > vh + 200) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < -240 || rect.top > vh + 240) continue;
         const offset = (rect.top + rect.height / 2 - vh / 2) * -speed;
         el.style.setProperty("--py", `${offset.toFixed(1)}px`);
       }

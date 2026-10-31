@@ -1,6 +1,6 @@
 // Release details shown across the page. Update these when a new build ships.
 export const release = {
-  version: "0.1.6",
+  version: "0.1.33",
   mac: {
     label: "Download for Mac",
     href: "downloads/Design-Studio-mac.dmg",
@@ -17,14 +17,18 @@ export const release = {
   // in the app repository): the server image (docker load), compose file and settings template.
   server: {
     requirements: "Linux · Docker 24+",
-    amd64: { label: "Server bundle · x86-64", href: "downloads/design-studio-server-0.1.6-linux-amd64.zip" },
-    arm64: { label: "Server bundle · arm64", href: "downloads/design-studio-server-0.1.6-linux-arm64.zip" },
+    amd64: { label: "Server bundle · x86-64", href: "downloads/design-studio-server-0.1.33-linux-amd64.zip" },
+    arm64: { label: "Server bundle · arm64", href: "downloads/design-studio-server-0.1.33-linux-arm64.zip" },
   },
 } as const;
+
+/** The developer site: docs for building apps, and the portal for listing them. */
+export const developersUrl = "https://developers.webuilder.ink";
 
 export const navLinks = [
   { id: "make", label: "Formats", href: "/#make" },
   { id: "websites", label: "Websites", href: "/#websites" },
+  { id: "apps", label: "Apps", href: "/#apps" },
   { id: "templates", label: "Templates", href: "/#templates" },
   { id: "together", label: "Teamwork", href: "/#together" },
   { id: "self-hosted", label: "Self-Hosted", href: "/self-hosted/" },

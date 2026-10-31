@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Figtree } from "next/font/google";
+import { Archivo, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 
-const sans = Figtree({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const sans = Archivo({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Design Studio — Design anything, publish anywhere",
@@ -19,13 +20,13 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#111016" },
+    { media: "(prefers-color-scheme: dark)", color: "#161a17" },
   ],
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={sans.variable} suppressHydrationWarning>
+    <html lang="en" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
       <head>
         {/* Mark JS as available before paint so reveal animations start hidden only when they can run. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />

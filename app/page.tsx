@@ -1,11 +1,12 @@
+import { AppsShowcase } from "@/components/AppsShowcase";
 import { AskStudioShowcase } from "@/components/AskStudioShowcase";
 import { BuilderShowcase } from "@/components/BuilderShowcase";
 import { DownloadButtons } from "@/components/DownloadButtons";
 import { FormatShowcase } from "@/components/FormatShowcase";
 import { AppleIcon, WindowsIcon, DownloadIcon, Logo, ArrowRightIcon } from "@/components/Icons";
-import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, CommentsMockup, OfflineArt, ServerMockup, Stickers } from "@/components/Mockups";
+import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, CommentsMockup, OfflineArt, ServerMockup } from "@/components/Mockups";
 import { PageEffects } from "@/components/PageEffects";
-import { navLinks, release } from "@/lib/site";
+import { developersUrl, navLinks, release } from "@/lib/site";
 
 
 const websiteTemplates = [
@@ -57,12 +58,28 @@ const faqs = [
     a: "Photos you add in the desktop app stay on your computer and are ready to use in any design.",
   },
   {
+    q: "What are apps?",
+    a: "Apps add outside tools to the editor. Pexels finds stock photos and Notion Images brings in pictures from your Notion pages. Install them from Apps on the home screen, and they appear in your side panel. Apps need an internet connection and a Design Studio account.",
+  },
+  {
+    q: "Can an app see my designs?",
+    a: "No. An app runs apart from your design and can't read what's in it. It can only do what you approved when you installed it, such as adding a picture. Apps listed by outside developers are reviewed before they reach the marketplace, and you can report or remove one at any time.",
+  },
+  {
+    q: "Can I make my own app?",
+    a: "Yes. An app is a small web page, and the developer docs take you from nothing to one running in a design. You can list it in the marketplace once you've been invited, and each version is reviewed first.",
+  },
+  {
     q: "Can I host the backend on my own servers?",
-    a: "Yes. Design Studio's server comes as one Docker Compose bundle with its own database, file storage and automatic HTTPS, so you can run it on any Linux machine and keep your team's work on your own infrastructure. The Self-Hosted Guide walks you through it.",
+    a: "Yes. The usual install is one Docker Compose bundle with its own database, file storage and automatic HTTPS. The Self-Hosted Guide also covers your own proxy, a database and file storage you already run, a process without Docker, and Kubernetes.",
   },
   {
     q: "Does Design Studio include AI writing?",
-    a: "Ask Studio drafts text in Docs, but it runs on an AI model you provide: your own key for OpenAI, Anthropic or a model on your own network. The key stays on your server and the feature is off until you add one. What people type is sent to the provider you choose. The Self-Hosted Guide shows how to set it up.",
+    a: "Ask Studio drafts text in Docs and powers the AI Builder for websites, but it runs on an AI model you provide: your own key for OpenAI, Anthropic or a model on your own network. The key stays on your server and the features are off until you add one. What people type is sent to the provider you choose. The Self-Hosted Guide shows how to set it up.",
+  },
+  {
+    q: "Can I make pictures with AI?",
+    a: "Select a picture and choose Replace: pick one of your own assets, search stock photos from Pexels or Unsplash, or describe a picture and have an AI image model make it. The stock photo and image model keys are yours and stay on your server; the options are off until you add them, and what people type is sent to the provider you choose.",
   },
 ];
 
@@ -105,8 +122,7 @@ export default function Home() {
               <DownloadButtons />
             </div>
           </div>
-          <div className="container hero__shot reveal">
-            <Stickers />
+          <div className="container hero__shot reveal" data-reveal="scale" data-parallax="0.08">
             <BrowserFrame
               url="Design Studio"
               app
@@ -122,7 +138,7 @@ export default function Home() {
           <div className="container">
             <h2 id="make-title" className="section__title reveal">One app for everything you make</h2>
           </div>
-          <div className="reveal">
+          <div className="reveal" data-reveal="scale">
             <FormatShowcase />
           </div>
         </section>
@@ -130,7 +146,7 @@ export default function Home() {
         {/* ── Website builder ──────────────────────────────── */}
         <section className="section section--soft" id="websites" aria-labelledby="web-title">
           <div className="container">
-            <div className="section__intro reveal">
+            <div className="section__intro reveal" data-reveal="left">
               <h2 id="web-title" className="section__title">Websites, made the visual way</h2>
               <p className="section__sub">
                 If you can make a poster, you can make a website. Here&rsquo;s how it goes.
@@ -140,10 +156,25 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Apps ─────────────────────────────────────────── */}
+        <section className="section section--soft" id="apps" aria-labelledby="apps-title">
+          <div className="container">
+            <div className="section__intro reveal" data-reveal="left">
+              <h2 id="apps-title" className="section__title">Bring your tools into your designs</h2>
+              <p className="section__sub">
+                Open Apps, choose one and install it. It sits in your side panel beside the canvas, ready in every design.
+              </p>
+            </div>
+            <div className="reveal">
+              <AppsShowcase />
+            </div>
+          </div>
+        </section>
+
         {/* ── Ask Studio ───────────────────────────────────── */}
         <section className="section" id="ask-studio" aria-labelledby="ask-title">
           <div className="container">
-            <div className="section__intro reveal">
+            <div className="section__intro reveal" data-reveal="right">
               <h2 id="ask-title" className="section__title">Ask Studio: write with AI, on your own key</h2>
               <p className="section__sub">
                 Describe what you need and get a draft in your Doc. You pick the AI model, and your key stays on your server.
@@ -163,7 +194,7 @@ export default function Home() {
             </div>
           </div>
           <div className="wall" aria-label="Template examples">
-            <div className="wall__row">
+            <div className="wall__row" data-parallax="0.05">
               <ul className="wall__track">
                 {[0, 1].map((dup) =>
                   websiteTemplates.map((t) => (
@@ -174,7 +205,7 @@ export default function Home() {
                 )}
               </ul>
             </div>
-            <div className="wall__row wall__row--rev">
+            <div className="wall__row wall__row--rev" data-parallax="-0.06">
               <ul className="wall__track">
                 {[0, 1].map((dup) =>
                   graphicTemplates.map((g) => (
@@ -193,46 +224,46 @@ export default function Home() {
           <div className="container">
             <h2 id="together-title" className="section__title reveal">Made for the way you work</h2>
             <div className="bento">
-              <article className="bcard bcard--violet bcard--wide reveal">
+              <article className="bcard bcard--violet bcard--wide reveal" data-reveal="left">
                 <div className="bcard__text">
                   <h3>Design together, live</h3>
                   <p>Invite friends, clients or your team. Everyone edits at once, sees each other&rsquo;s cursors and leaves comments right on the page.</p>
                 </div>
                 <CommentsMockup />
               </article>
-              <article className="bcard bcard--peach reveal" id="assets">
+              <article className="bcard bcard--peach reveal" data-reveal="right" id="assets">
                 <div className="bcard__text">
                   <h3>Your photos, always at hand</h3>
                   <p>Keep photos, logos and graphics in one library and drag them into any design.</p>
                 </div>
                 <AssetsMockup />
               </article>
-              <article className="bcard bcard--mint reveal" id="offline">
+              <article className="bcard bcard--mint reveal" data-reveal="left" id="offline">
                 <div className="bcard__text">
                   <h3>Works offline</h3>
                   <p>Keep designing on a plane or in a café with bad signal. Your work is saved on your computer.</p>
                 </div>
                 <OfflineArt />
               </article>
-              <article className="bcard bcard--blue bcard--wide reveal">
+              <article className="bcard bcard--blue bcard--wide reveal" data-reveal="right">
                 <div className="bcard__text">
                   <h3>On your desktop and in your browser</h3>
                   <p>Install it on your Mac or Windows PC, or open it in a web browser when you&rsquo;d rather not install anything.</p>
                 </div>
                 <BrowserArt />
               </article>
-              <article className="bcard bcard--dark bcard--wide reveal" id="self-hosted">
+              <article className="bcard bcard--dark bcard--wide reveal" data-reveal="left" id="self-hosted">
                 <div className="bcard__text">
                   <span className="sh-bento-badge">Self-hosted</span>
                   <h3>Run it on your own server</h3>
-                  <p>Keep designs, photos and accounts on your own infrastructure. One Docker Compose bundle, with automatic HTTPS, and the desktop app connects to it.</p>
+                  <p>Keep designs, photos and accounts on your own infrastructure. Start with one Docker Compose bundle, or run the same server behind your own proxy, with your own database, or on Kubernetes.</p>
                   <a href="/self-hosted/" className="btn btn--outline btn--sm sh-bento-btn">
                     Read the Self-Hosted Guide <ArrowRightIcon className="sh-bento-btn__icon" />
                   </a>
                 </div>
                 <ServerMockup />
               </article>
-              <article className="bcard bcard--violet reveal" id="ask-studio-card">
+              <article className="bcard bcard--violet reveal" data-reveal="scale" id="ask-studio-card">
                 <div className="bcard__text">
                   <h3>Write faster with Ask Studio</h3>
                   <p>Draft summaries, proposals and notes right in a Doc. Bring your own AI key: it stays on your server, and it&rsquo;s off until you add one.</p>
@@ -252,9 +283,9 @@ export default function Home() {
         <section className="section" id="faq" aria-labelledby="faq-title">
           <div className="container faq">
             <h2 id="faq-title" className="section__title reveal">Questions? We&rsquo;ve got answers</h2>
-            <div className="faq__list reveal">
+            <div className="faq__list">
               {faqs.map((f) => (
-                <details key={f.q} className="faq__item">
+                <details key={f.q} className="faq__item reveal">
                   <summary>
                     <span>{f.q}</span>
                     <i aria-hidden="true" />
@@ -306,6 +337,7 @@ export default function Home() {
             <ul>
               <li><a href="#make">Formats</a></li>
               <li><a href="#websites">Website builder</a></li>
+              <li><a href="#apps">Apps</a></li>
               <li><a href="#templates">Templates</a></li>
               <li><a href="#together">Teamwork</a></li>
               <li><a href="/self-hosted/">Self-hosting</a></li>
@@ -324,6 +356,7 @@ export default function Home() {
               <li><a href="#faq">FAQ</a></li>
               <li><a href="#offline">Working offline</a></li>
               <li><a href="/self-hosted/">Self-Hosted Guide</a></li>
+              <li><a href={`${developersUrl}/docs`}>Developer docs</a></li>
             </ul>
           </nav>
         </div>
