@@ -23,7 +23,6 @@ export const release = {
 } as const;
 
 /** The developer site: docs for building apps, and the portal for listing them. */
-export const developersUrl = "https://developers.webuilder.ink";
 
 export const navLinks = [
   { id: "make", label: "Formats", href: "/#make" },
@@ -32,6 +31,7 @@ export const navLinks = [
   { id: "templates", label: "Templates", href: "/#templates" },
   { id: "together", label: "Teamwork", href: "/#together" },
   { id: "self-hosted", label: "Self-Hosted", href: "/self-hosted/" },
+  { id: "developers", label: "Developers", href: "/developers/" },
   { id: "faq", label: "FAQ", href: "/#faq" },
 ] as const;
 

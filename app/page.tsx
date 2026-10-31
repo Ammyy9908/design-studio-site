@@ -6,7 +6,7 @@ import { FormatShowcase } from "@/components/FormatShowcase";
 import { AppleIcon, WindowsIcon, DownloadIcon, Logo, ArrowRightIcon } from "@/components/Icons";
 import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, CommentsMockup, OfflineArt, ServerMockup } from "@/components/Mockups";
 import { PageEffects } from "@/components/PageEffects";
-import { developersUrl, navLinks, release } from "@/lib/site";
+import { navLinks, release } from "@/lib/site";
 
 
 const websiteTemplates = [
@@ -67,7 +67,7 @@ const faqs = [
   },
   {
     q: "Can I make my own app?",
-    a: "Yes. An app is a small web page, and the developer docs take you from nothing to one running in a design. You can list it in the marketplace once you've been invited, and each version is reviewed first.",
+    a: "Yes, if you run your own server. An app is a small web page, and the developer docs on this site take you from nothing to one running in a design. You build it in your server's developer portal, and whoever runs the server reviews each version before people can install it.",
   },
   {
     q: "Can I host the backend on my own servers?",
@@ -356,7 +356,7 @@ export default function Home() {
               <li><a href="#faq">FAQ</a></li>
               <li><a href="#offline">Working offline</a></li>
               <li><a href="/self-hosted/">Self-Hosted Guide</a></li>
-              <li><a href={`${developersUrl}/docs`}>Developer docs</a></li>
+              <li><a href="/developers/">Developer docs</a></li>
             </ul>
           </nav>
         </div>

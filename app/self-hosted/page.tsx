@@ -174,6 +174,9 @@ export default function SelfHostedPage() {
               <li>
                 <a href="/self-hosted/">Self-Hosted Guide</a>
               </li>
+              <li>
+                <a href="/developers/">Developer docs</a>
+              </li>
             </ul>
           </nav>
         </div>

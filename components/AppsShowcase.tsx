@@ -1,5 +1,4 @@
 import { ArrowRightIcon } from "./Icons";
-import { developersUrl } from "@/lib/site";
 
 const listed = [
   { name: "Pexels", tone: "#1f6f5c", text: "Search free stock photos and add them to your design." },
@@ -59,9 +58,9 @@ export function AppsShowcase() {
       <aside className="apps__dev">
         <div>
           <h3>Build an app for Design Studio</h3>
-          <p>An app is a small web page that runs beside the canvas. Read how it works, try yours in your own designs, then send it for review. Listing is by invitation for now.</p>
+          <p>An app is a small web page that runs beside the canvas. If you run your own server, you can turn on its developer portal, build and test apps there, and review them before your team sees them.</p>
         </div>
-        <a className="btn btn--outline" href={`${developersUrl}/docs/quickstart`}>
+        <a className="btn btn--outline" href="/developers/">
           Read the developer docs <ArrowRightIcon className="btn__icon btn__icon--sm" />
         </a>
       </aside>

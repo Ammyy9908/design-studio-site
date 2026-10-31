@@ -3853,3 +3853,116 @@ h3,
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Developer docs: one long page with its contents beside it. */
+.docs {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: start;
+}
+.docs__toc {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.docs__toc a {
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.docs__toc a:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.docs__body {
+  min-width: 0;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+.docs__body section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-margin-top: 96px;
+}
+.docs__body h2 {
+  font-size: clamp(26px, 3vw, 34px);
+  color: var(--ink);
+}
+.docs__body h3 {
+  margin-top: 12px;
+  font-size: 19px;
+  color: var(--ink);
+}
+.docs__body p,
+.docs__body li {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.docs__body ul,
+.docs__body ol {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.docs__body ul {
+  list-style: disc;
+}
+.docs__body ol {
+  list-style: decimal;
+}
+.docs__body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.docs__body p code,
+.docs__body li code,
+.docs__body td code,
+.docs__body .sh-callout code {
+  font-size: 0.88em;
+  overflow-wrap: anywhere;
+}
+.docs__body ol.docs__flow {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.docs__flow li {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.docs__flow strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+@media (max-width: 860px) {
+  .docs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .docs__toc {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .docs__body ol.docs__flow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
