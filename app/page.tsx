@@ -46,6 +46,10 @@ const faqs = [
     a: "Press Publish. Your site goes live on the web straight away, with no hosting to set up. Made a change later? Press Publish again and the new version replaces the old one.",
   },
   {
+    q: "Can my website use my own domain?",
+    a: "Yes, on a self-hosted server open to the internet. Add the domain in the Publish panel and create the two DNS records it shows you. Once they're found, your site opens at your domain with HTTPS set up for you. Visitors only reach your website there, never the Design Studio app or anyone's account.",
+  },
+  {
     q: "Can I work on a design with other people?",
     a: "Yes. Share a design and everyone can edit at the same time, see each other's cursors and leave comments right on the page.",
   },

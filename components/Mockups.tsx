@@ -130,6 +130,21 @@ export function PublishMockup() {
   );
 }
 
+export function CustomDomainMockup() {
+  return (
+    <div className="domain" role="img" aria-label="Illustration of the Custom domains panel: www.noravale.com is connected, with the DNS records to create for it">
+      <b className="domain__title">Custom domains</b>
+      <span className="domain__head">
+        <b>www.noravale.com</b>
+        <i>Connected</i>
+      </span>
+      <span className="domain__record"><em>TXT</em><code>_studio-verify.www</code><code>studio-verify=…</code></span>
+      <span className="domain__record"><em>CNAME</em><code>www</code><code>studio.noravale.com</code></span>
+      <span className="domain__lock">🔒 https://www.noravale.com</span>
+    </div>
+  );
+}
+
 export function ReplaceImageMockup() {
   return (
     <div className="replace" role="img" aria-label="Illustration of the Replace image window with three tabs: your assets, stock photos and AI image. The AI image tab shows a model, a description and a generated picture">

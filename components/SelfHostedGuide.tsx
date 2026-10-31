@@ -7,6 +7,7 @@ import {
   CpuIcon,
   DatabaseIcon,
   DownloadIcon,
+  GlobeIcon,
   KeyIcon,
   MailIcon,
   RefreshIcon,
@@ -30,6 +31,7 @@ type Tab =
   | "settings"
   | "desktop"
   | "email"
+  | "domains"
   | "askstudio"
   | "maintenance";
 
@@ -205,6 +207,29 @@ const settings = [
       "Shared secret for that separate WebSocket process. At least 32 characters, and the same value on the server and on the WebSocket process. Unused while REALTIME_URL is empty.",
   },
   {
+    name: "CUSTOM_DOMAINS",
+    group: "general",
+    required: false,
+    example: "true in the bundle",
+    description:
+      "Lets people serve a published website on their own domain. The Docker Compose bundle turns this on; other installs set it to true and need a proxy that gets certificates per domain.",
+  },
+  {
+    name: "CUSTOM_DOMAIN_TARGET",
+    group: "general",
+    required: false,
+    example: "(empty = PUBLIC_URL's name)",
+    description: "The name people point subdomains at, such as sites.example.com. It describes your server, not anyone's domain.",
+  },
+  {
+    name: "CUSTOM_DOMAIN_IP",
+    group: "general",
+    required: false,
+    example: "(empty = looked up)",
+    description:
+      "Your server's public IPv4 address, which people point top-level domains at. Set it when PUBLIC_URL's name resolves to something else, such as a CDN or a tunnel.",
+  },
+  {
     name: "STUDIO_VERSION",
     group: "general",
     required: false,
@@ -229,6 +254,7 @@ const sharedTabs: { id: Tab; label: string; icon: typeof TerminalIcon }[] = [
   { id: "settings", label: "Settings (.env)", icon: KeyIcon },
   { id: "desktop", label: "Desktop app", icon: AppleIcon },
   { id: "email", label: "Email", icon: MailIcon },
+  { id: "domains", label: "Custom domains", icon: GlobeIcon },
   { id: "askstudio", label: "Ask Studio (AI)", icon: SparkleIcon },
   { id: "maintenance", label: "Backups & updates", icon: RefreshIcon },
 ];
@@ -1153,6 +1179,103 @@ docker compose logs studio | grep -i "send email"`}
               code={`docker compose exec postgres psql -U studio -d studio \\
   -c "UPDATE users SET email_verified_at = now() WHERE email = 'person@example.com';"`}
             />
+          </div>
+        </section>
+      )}
+
+      {/* ── Custom domains ────────────────────────────────── */}
+      {activeTab === "domains" && (
+        <section className="sh-section" aria-labelledby="domains-title">
+          <div className="sh-card">
+            <div className="sh-card__header">
+              <span className="sh-badge sh-badge--mint">Websites</span>
+              <h2 id="domains-title" className="sh-card__title">Websites on their own domains</h2>
+              <p className="sh-card__sub">
+                Someone who publishes a website can serve it on a domain they own. They add it in the Publish panel,
+                create the DNS records it shows, and the site opens at the root of that domain over HTTPS. There is no
+                certificate to upload.
+              </p>
+            </div>
+
+            <h3>1. Get the server ready</h3>
+            <p>
+              With the Docker Compose bundle and its <code>https</code> profile, this is already on. Keep ports 80 and
+              443 open to the internet, because Let&rsquo;s Encrypt must reach the server to issue each certificate.
+              To turn it off, set <code>CUSTOM_DOMAINS=false</code>.
+            </p>
+            <p>
+              On any other install, set <code>CUSTOM_DOMAINS=true</code> and use a proxy that gets a certificate for
+              each domain on demand, and asks <code>/api/site-domains/tls-ask</code> first. The bundle&rsquo;s{" "}
+              <code>Caddyfile</code> shows how. A Cloudflare tunnel can&rsquo;t do this on its own, because
+              certificates need ports 80 and 443 to reach a proxy you run.
+            </p>
+            <p>
+              If <code>PUBLIC_URL</code>&rsquo;s name doesn&rsquo;t resolve to this server, set{" "}
+              <code>CUSTOM_DOMAIN_IP</code> and <code>CUSTOM_DOMAIN_TARGET</code>, or people will be told to point
+              their domains at the wrong place.
+            </p>
+
+            <h3>2. What people are asked to create</h3>
+            <p>
+              For example at Namecheap (Domain List › Manage › Advanced DNS), where a host is written relative to the
+              domain:
+            </p>
+            <div className="sh-dns-table-wrapper">
+              <table className="sh-dns-table">
+                <thead>
+                  <tr>
+                    <th>For</th>
+                    <th>Type</th>
+                    <th>Host</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Either kind of domain</td>
+                    <td><code>TXT</code></td>
+                    <td><code>_studio-verify</code> (<code>_studio-verify.www</code> for <code>www.example.com</code>)</td>
+                    <td>The <code>studio-verify=…</code> value shown in the panel</td>
+                  </tr>
+                  <tr>
+                    <td><code>example.com</code></td>
+                    <td><code>A</code></td>
+                    <td><code>@</code></td>
+                    <td>Your server&rsquo;s IP address</td>
+                  </tr>
+                  <tr>
+                    <td><code>www.example.com</code></td>
+                    <td><code>CNAME</code></td>
+                    <td><code>www</code></td>
+                    <td>Your server&rsquo;s name</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              <code>example.com</code> and <code>www.example.com</code> are separate domains, so a site that should
+              answer on both adds both. Wildcards aren&rsquo;t supported. Remove any existing <code>A</code> or{" "}
+              <code>CNAME</code> record on the same host, and any <code>CAA</code> record must allow{" "}
+              <code>letsencrypt.org</code>.
+            </p>
+
+            <h3>3. How it stays safe</h3>
+            <ul className="sh-list">
+              <li>A domain is served only after its TXT record shows the token given to that website.</li>
+              <li>The proxy asks the server before getting a certificate, and only verified domains are allowed.</li>
+              <li>A custom domain reaches that website&rsquo;s pages and form replies only: not the app, the API, sessions or cookies.</li>
+              <li>
+                While this is on, the app answers only on <code>PUBLIC_URL</code>, <code>LIVE_URL</code> and{" "}
+                <code>DEVELOPER_URL</code>. Any other public name gets a 404.
+              </li>
+            </ul>
+
+            <div className="sh-callout sh-callout--info">
+              <strong>If it stays on Waiting for DNS.</strong> A changed TXT record can take as long as its old TTL to
+              reach your server, even when it already looks right elsewhere. Wait and press Check now again. The first
+              visit can also take up to a minute while the certificate is issued. Let&rsquo;s Encrypt limits
+              certificates per domain each week, so check DNS before retrying many times.
+            </div>
           </div>
         </section>
       )}

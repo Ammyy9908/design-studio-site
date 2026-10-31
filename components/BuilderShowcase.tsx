@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { BrowserFrame, PhoneFrame, MotionMockup, PublishMockup, ReplaceImageMockup } from "./Mockups";
+import { BrowserFrame, CustomDomainMockup, PhoneFrame, MotionMockup, PublishMockup, ReplaceImageMockup } from "./Mockups";
 
 export type Step = { title: string; body: string; points: string[]; visual: ReactNode };
 
@@ -59,6 +59,12 @@ const steps: Step[] = [
     body: "When you're happy, press Publish and your site is live on the web. Changed something? Publish again and the update is online in seconds.",
     points: ["No hosting to set up", "Update any time"],
     visual: <PublishMockup />,
+  },
+  {
+    title: "Put it on your own domain",
+    body: "Add a domain you own in the Publish panel and create the two DNS records it shows you, at Namecheap or wherever you manage your domain. Your site then opens at that address with every page, picture and form working.",
+    points: ["HTTPS is set up for you, with no certificate to upload", "Prove the domain is yours with one DNS record", "Needs a self-hosted server open to the internet"],
+    visual: <CustomDomainMockup />,
   },
 ];
 
