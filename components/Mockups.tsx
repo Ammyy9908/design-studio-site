@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 // Illustrative product mockups drawn with HTML/CSS. Decorative pieces are aria-hidden;
 // anything that stands in for a real screenshot gets a text alternative.
 
@@ -36,65 +34,7 @@ export function PhoneFrame({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-/** Playful floating "stickers" around the hero screenshot. Purely decorative. */
-export function Stickers() {
-  return (
-    <div className="stickers" aria-hidden="true">
-      <span className="stk stk--text" data-parallax="0.18">T</span>
-      <span className="stk stk--heart" data-parallax="0.28" />
-      <span className="stk stk--wheel" data-parallax="0.12" />
-      <span className="stk stk--note" data-parallax="0.22"><i /></span>
-      <span className="stk stk--play" data-parallax="0.3" />
-      <span className="stk stk--globe" data-parallax="0.16" />
-      <span className="stk stk--tag" data-parallax="0.24">Maya</span>
-      <span className="stk stk--star" data-parallax="0.2" />
-    </div>
-  );
-}
-
 /** Small decorative illustrations for the format cards. */
-export function MakeArt({ kind }: { kind: string }) {
-  return <div className={`art art--${kind}`} aria-hidden="true">{artInner[kind]}</div>;
-}
-
-const artInner: Record<string, ReactNode> = {
-  slides: (
-    <>
-      <span className="slide slide--back" />
-      <span className="slide"><b>Launch the<br />next big thing</b><i /></span>
-    </>
-  ),
-  social: (
-    <>
-      <span className="sq sq--b"><b>NEW<br />DROP</b></span>
-      <span className="sq"><b>SUMMER<br />SALE</b><i>50% off</i></span>
-    </>
-  ),
-  video: (
-    <>
-      <span className="reel"><i className="play" /><b>3 days<br />to go</b></span>
-      <span className="timeline"><i /><i /><i /><i /></span>
-    </>
-  ),
-  poster: (
-    <>
-      <span className="tall"><i className="disc" /><b>NIGHT<br />SHIFT</b></span>
-      <span className="card-inv"><em>You&rsquo;re invited</em><b>Maya &amp; Leo</b><i>June 14 · Garden party</i></span>
-    </>
-  ),
-  board: (
-    <>
-      <span className="note n1">Ideas</span>
-      <span className="note n2">Plan</span>
-      <span className="note n3">Launch</span>
-      <svg className="arrows" viewBox="0 0 200 120"><path d="M58 40 C 90 20, 110 20, 128 40" /><path d="M140 70 C 120 100, 90 104, 70 90" /></svg>
-    </>
-  ),
-  doc: (
-    <span className="page"><b /><i /><i /><i className="s" /><span className="page__img" /><i /><i className="s" /></span>
-  ),
-};
-
 export function MotionMockup() {
   return (
     <div className="motion" role="img" aria-label="Illustration of website cards gliding into view and a panel of interaction settings: fade up while scrolling, lift on hover, open menu on click">
@@ -140,7 +80,7 @@ export function CustomDomainMockup() {
       </span>
       <span className="domain__record"><em>TXT</em><code>_studio-verify.www</code><code>studio-verify=…</code></span>
       <span className="domain__record"><em>CNAME</em><code>www</code><code>studio.noravale.com</code></span>
-      <span className="domain__lock">🔒 https://www.noravale.com</span>
+      <span className="domain__lock">https://www.noravale.com</span>
     </div>
   );
 }
@@ -160,20 +100,53 @@ export function ReplaceImageMockup() {
   );
 }
 
-export function CommentsMockup() {
+/** The same drawn characters people choose on their Account page. */
+const LiveAvatar = ({ kind }: { kind: "cat" | "robot" }) => (
+  <svg className="live__av" viewBox="0 0 96 96" aria-hidden="true">
+    {kind === "cat" ? (
+      <>
+        <rect width="96" height="96" fill="#FFD166" />
+        <path d="M20 44 22 14l20 14h12l20-14 2 30c0 20-12 34-28 34S20 64 20 44z" fill="#EF476F" />
+        <circle cx="37" cy="46" r="5" fill="#2B193D" />
+        <circle cx="59" cy="46" r="5" fill="#2B193D" />
+      </>
+    ) : (
+      <>
+        <rect width="96" height="96" fill="#BDE0FE" />
+        <rect x="20" y="24" width="56" height="48" rx="14" fill="#3A86FF" />
+        <circle cx="36" cy="46" r="8" fill="#BDE0FE" />
+        <circle cx="60" cy="46" r="8" fill="#BDE0FE" />
+      </>
+    )}
+  </svg>
+);
+
+export function LiveMockup() {
   return (
-    <div className="collab" role="img" aria-label="Illustration of two people editing a slide together, with name tags on their cursors and a comment thread beside it">
-      <div className="collab__slide">
-        <span className="collab__title">Q3 plan</span>
-        <span className="collab__chart"><i style={{ height: "40%" }} /><i style={{ height: "65%" }} /><i style={{ height: "52%" }} /><i style={{ height: "88%" }} /></span>
-        <span className="cursor cursor--a" />
-        <span className="cursor cursor--b" />
-        <span className="pin">2</span>
+    <div className="live" role="img" aria-label="Illustration of a design being edited together: two cursors with avatars and a chat bubble on the page, a voice call with two people, and a comment thread">
+      <div className="live__bar">
+        <b>Q3 plan</b>
+        <span className="live__follow">Following Jess <u>Stop</u></span>
       </div>
-      <div className="collab__thread">
-        <div className="msg"><b className="av av--b">J</b><p><strong>Jess</strong> Could we try a warmer background?</p></div>
-        <div className="msg msg--reply"><b className="av av--c">O</b><p><strong>Omar</strong> Done — switched it to amber</p></div>
-        <span className="collab__reply">Reply…</span>
+      <div className="live__body">
+        <div className="live__page">
+          <span className="live__title">Q3 plan</span>
+          <span className="collab__chart"><i style={{ height: "40%" }} /><i style={{ height: "65%" }} /><i style={{ height: "52%" }} /><i style={{ height: "88%" }} /></span>
+          <span className="live__cursor live__cursor--a"><LiveAvatar kind="cat" /> Jess<em>Try amber here?</em></span>
+          <span className="live__cursor live__cursor--b"><LiveAvatar kind="robot" /> Omar</span>
+        </div>
+        <div className="live__side">
+          <div className="live__call">
+            <strong>In call</strong>
+            <span><LiveAvatar kind="cat" /> Jess <small>Speaking</small></span>
+            <span><LiveAvatar kind="robot" /> Omar <small>Muted</small></span>
+          </div>
+          <div className="live__thread">
+            <strong>Comments</strong>
+            <p><b>Jess</b> @Omar could we try a warmer background?</p>
+            <p><b>Omar</b> Done, switched it to amber</p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -264,7 +237,7 @@ export function AskStudioMockup() {
   return (
     <div className="ask-art" role="img" aria-label="Illustration of Ask Studio drafting a document section from a prompt">
       <div className="ask-art__prompt" aria-hidden="true">
-        <span>✦</span> Draft an executive summary…
+        Draft an executive summary…
       </div>
       <div className="ask-art__doc" aria-hidden="true">
         <b />

@@ -17,7 +17,7 @@ function DocFrame({ children, url = "Untitled doc" }: { children: React.ReactNod
 function Toolbar({ glow = false }: { glow?: boolean }) {
   return (
     <div className="aa-toolbar" aria-hidden="true">
-      <span className={`aa-btn${glow ? " is-glow" : ""}`}>✦ Ask Studio</span>
+      <span className={`aa-btn${glow ? " is-glow" : ""}`}>Ask Studio</span>
       <span className="aa-tool">Title ▾</span>
       <span className="aa-tool"><b>B</b></span>
       <span className="aa-tool"><i>I</i></span>
@@ -43,7 +43,7 @@ const PromptVisual = (
     <DocFrame>
       <div className="aa-dim" aria-hidden="true" />
       <div className="aa-dialog" aria-hidden="true">
-        <b>✦ Ask Studio</b>
+        <b>Ask Studio</b>
         <div className="aa-input">
           <span>Draft an executive summary for our Q3 launch plan</span>
           <em>Generate</em>
@@ -65,7 +65,7 @@ const DraftVisual = (
         <h4>Q3 Launch Plan</h4>
         <p className="aa-line" style={{ width: "96%" }} />
         <p className="aa-line" style={{ width: "88%" }} />
-        <div className="aa-callout">💡 <i style={{ width: "70%" }} /></div>
+        <div className="aa-callout"><i style={{ width: "70%" }} /></div>
         <h5>Key priorities</h5>
         <ul>
           <li><i style={{ width: "62%" }} /></li>
@@ -91,7 +91,7 @@ ASK_STUDIO_MODEL=gpt-4.1-mini
     <ul className="aa-providers" aria-hidden="true">
       <li>Anthropic</li><li>OpenAI</li><li>Ollama</li><li>vLLM</li><li>Any OpenAI-compatible API</li>
     </ul>
-    <p className="aa-note" aria-hidden="true">🔒 The key stays on your server</p>
+    <p className="aa-note" aria-hidden="true">The key stays on your server</p>
   </div>
 );
 

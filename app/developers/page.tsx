@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { CodeBlock } from "@/components/CodeBlock";
 import { Logo } from "@/components/Icons";
 import { PageEffects } from "@/components/PageEffects";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, release } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -193,8 +194,9 @@ export default function DevelopersPage() {
               </li>
             ))}
           </ul>
+          <ThemeToggle />
           <a href="/#download" className="btn btn--violet btn--sm">
-            Download App
+            Download
           </a>
         </nav>
       </header>
@@ -202,10 +204,10 @@ export default function DevelopersPage() {
       <main id="docs-main">
         <section className="sh-hero" aria-labelledby="docs-title">
           <div className="container sh-hero__inner">
-            <h1 id="docs-title" className="sh-hero__title reveal" data-reveal="scale">
+            <h1 id="docs-title" className="sh-hero__title">
               Build apps for Design Studio
             </h1>
-            <p className="sh-hero__lead reveal">
+            <p className="sh-hero__lead">
               Apps are built and reviewed in a developer portal that runs on your own self-hosted server. Download the
               server bundle, turn the portal on, and use these docs to make your first app.
             </p>
@@ -216,7 +218,10 @@ export default function DevelopersPage() {
           <div className="container docs">
             <nav className="docs__toc" aria-label="On this page">
               {sections.map(([id, label]) => (
-                <a key={id} href={`#${id}`}>{label}</a>
+                <a key={id} href={`#${id}`} data-nav-link="">
+                  {label}
+                  <i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" />
+                </a>
               ))}
             </nav>
 

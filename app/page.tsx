@@ -3,9 +3,11 @@ import { AskStudioShowcase } from "@/components/AskStudioShowcase";
 import { BuilderShowcase } from "@/components/BuilderShowcase";
 import { DownloadButtons } from "@/components/DownloadButtons";
 import { FormatShowcase } from "@/components/FormatShowcase";
+import type { CSSProperties, ReactNode } from "react";
 import { AppleIcon, WindowsIcon, DownloadIcon, Logo, ArrowRightIcon } from "@/components/Icons";
-import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, CommentsMockup, OfflineArt, ServerMockup } from "@/components/Mockups";
+import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, LiveMockup, OfflineArt, ServerMockup } from "@/components/Mockups";
 import { PageEffects } from "@/components/PageEffects";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, release } from "@/lib/site";
 
 
@@ -26,6 +28,15 @@ const graphicTemplates = [
   { cls: "g-learn", title: "Learn design in 10 min" },
   { cls: "g-wed", title: "Maya & Leo" },
   { cls: "g-menu", title: "Café menu" },
+];
+
+const teamwork = [
+  { title: "Talk in a call room", text: "Each design has one voice call room, for up to 6 people. Join, mute and choose your microphone without leaving the page." },
+  { title: "Follow someone", text: "Follow a teammate and your view moves with theirs, so they can walk you through the design." },
+  { title: "Chat on the canvas", text: "Press / and type. Your words appear beside your cursor for everyone there, then they\u2019re gone." },
+  { title: "Comments that reach you", text: "Pin comments to the page and @mention people, even ones who are away. They see it under the bell and by email." },
+  { title: "Choose what you\u2019re emailed", text: "Pick everything, only mentions and replies, or nothing, for your account or one design." },
+  { title: "Version history", text: "Versions save by themselves as you edit. Name one, preview any, and restore it. A restore keeps what it replaces." },
 ];
 
 const faqs = [
@@ -51,7 +62,19 @@ const faqs = [
   },
   {
     q: "Can I work on a design with other people?",
-    a: "Yes. Share a design and everyone can edit at the same time, see each other's cursors and leave comments right on the page.",
+    a: "Yes. Share a design and everyone can edit at the same time, see each other's cursors and leave comments right on the page. You can also follow someone's view, or press / to chat beside your cursor. Cursor chat works everywhere except Docs and Sheets.",
+  },
+  {
+    q: "Can we talk while we work?",
+    a: "Yes. Every design has a voice call room for up to 6 people, in the desktop app and the browser. It's voice only, and it needs an internet connection.",
+  },
+  {
+    q: "Will I get emails about comments?",
+    a: "By default you get an email when someone mentions you or replies to you. On your Account page you can choose every comment on your designs, or nothing at all. Emails wait a little, so a busy thread doesn't fill your inbox, and each one has an unsubscribe link.",
+  },
+  {
+    q: "Can I go back to an earlier version?",
+    a: "Yes. Open Version history from the File menu to preview earlier versions and restore one. Versions are saved by themselves about every 10 minutes while people edit, and you can name the ones you want to keep. Restoring first saves what you had, so nothing is lost.",
   },
   {
     q: "What can I download my designs as?",
@@ -63,7 +86,15 @@ const faqs = [
   },
   {
     q: "What are apps?",
-    a: "Apps add outside tools to the editor. Pexels finds stock photos and Notion Images brings in pictures from your Notion pages. Install them from Apps on the home screen, and they appear in your side panel. Apps need an internet connection and a Design Studio account.",
+    a: "Apps add outside tools to the editor, like free stock photos, moving graphics, videos and pictures from your Notion pages. Get them from Apps on the home screen, and they appear in your side panel. Apps need an internet connection and a Design Studio account.",
+  },
+  {
+    q: "Why does an app say it needs setting up?",
+    a: "Some apps need a key from the service they connect to, and it stays on the server, never in the app. Whoever runs your server adds it. Until then, the app's page says which setting it's waiting for.",
+  },
+  {
+    q: "Can I choose which apps my team can use?",
+    a: "Yes, on your own server. Set APPS_ALLOWED to all, none or a list of app ids. MARKETPLACE_URL=off stops reading the marketplace altogether. Your server only requests the list and the app packages, so nothing about people or designs is sent.",
   },
   {
     q: "Can an app see my designs?",
@@ -87,6 +118,16 @@ const faqs = [
   },
 ];
 
+/** The editor's selection box around one thing in a section. */
+function Sel({ children }: { children: ReactNode }) {
+  return (
+    <span className="sel">
+      {children}
+      <i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" />
+    </span>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -107,6 +148,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <ThemeToggle />
           <a href="#download" className="btn btn--violet btn--sm">
             Download
           </a>
@@ -116,33 +158,54 @@ export default function Home() {
       <main id="main">
         {/* ── Hero ─────────────────────────────────────────── */}
         <section className="hero" id="top" aria-labelledby="hero-title">
-          <div className="container hero__copy">
-            <h1 id="hero-title" className="reveal">What will you make next?</h1>
-            <p className="hero__sub reveal">
-              Presentations, social posts, videos, posters, whiteboards, documents and full websites — all in one
-              easy app for Mac and Windows.
-            </p>
-            <div className="reveal">
+          <div className="container hero__grid">
+            <div className="hero__copy">
+              <h1 id="hero-title">Make posters, decks, videos and websites in one app</h1>
+              <p className="hero__sub">
+                Social posts, whiteboards and documents too. No design training needed, on Mac, Windows or in your browser.
+              </p>
               <DownloadButtons />
             </div>
-          </div>
-          <div className="container hero__shot reveal" data-reveal="scale" data-parallax="0.08">
-            <BrowserFrame
-              url="Design Studio"
-              app
-              eager
-              src="assets/website-effects-panel.webp"
-              alt="The Design Studio editor: an outline of the page on the left, a website being edited in the middle and style controls on the right"
-            />
+            <div className="desk">
+              <figure className="board board--extra" style={{ "--x": "4%", "--y": "4%", "--w": "38%" } as CSSProperties}>
+                <figcaption>Photography website</figcaption>
+                <img className="board__art" src="assets/tpl-lumen.webp" alt="Lumen, a dark photography studio website template" width={1400} height={830} decoding="async" />
+              </figure>
+              <figure className="board board--poster" style={{ "--x": "46%", "--y": "4%", "--w": "21%" } as CSSProperties}>
+                <figcaption>Poster</figcaption>
+                <div className="sel">
+                  <div className="board__art gtpl g-sale" role="img" aria-label="A Summer sale poster template"><b>Summer sale</b></div>
+                  <i /><i /><i /><i />
+                </div>
+              </figure>
+              <figure className="board board--folio" style={{ "--x": "71%", "--y": "4%", "--w": "38%" } as CSSProperties}>
+                <figcaption>Portfolio website</figcaption>
+                <img className="board__art" src="assets/tpl-folio.webp" alt="Nora Vale, a playful lilac designer portfolio template" width={1400} height={830} decoding="async" />
+              </figure>
+              <figure className="board board--extra" style={{ "--x": "4%", "--y": "44%", "--w": "19%" } as CSSProperties}>
+                <figcaption>Story</figcaption>
+                <div className="board__art gtpl g-story" role="img" aria-label="A 3 days to go social story template"><b>3 days to go</b></div>
+              </figure>
+              <figure className="board board--editor" style={{ "--x": "26%", "--y": "39%", "--w": "84%" } as CSSProperties}>
+                <figcaption>In the editor</figcaption>
+                <BrowserFrame
+                  url="Design Studio"
+                  app
+                  eager
+                  src="assets/website-effects-panel.webp"
+                  alt="The Design Studio editor: an outline of the page on the left, a website being edited in the middle and style controls on the right"
+                />
+              </figure>
+            </div>
           </div>
         </section>
 
         {/* ── Formats ──────────────────────────────────────── */}
         <section className="section" id="make" aria-labelledby="make-title">
           <div className="container">
-            <h2 id="make-title" className="section__title reveal">One app for everything you make</h2>
+            <h2 id="make-title" className="section__title">One app for <Sel>everything</Sel> you make</h2>
           </div>
-          <div className="reveal" data-reveal="scale">
+          <div>
             <FormatShowcase />
           </div>
         </section>
@@ -150,8 +213,8 @@ export default function Home() {
         {/* ── Website builder ──────────────────────────────── */}
         <section className="section section--soft" id="websites" aria-labelledby="web-title">
           <div className="container">
-            <div className="section__intro reveal" data-reveal="left">
-              <h2 id="web-title" className="section__title">Websites, made the visual way</h2>
+            <div className="section__intro">
+              <h2 id="web-title" className="section__title">Websites, made the <Sel>visual</Sel> way</h2>
               <p className="section__sub">
                 If you can make a poster, you can make a website. Here&rsquo;s how it goes.
               </p>
@@ -163,13 +226,13 @@ export default function Home() {
         {/* ── Apps ─────────────────────────────────────────── */}
         <section className="section section--soft" id="apps" aria-labelledby="apps-title">
           <div className="container">
-            <div className="section__intro reveal" data-reveal="left">
+            <div className="section__intro">
               <h2 id="apps-title" className="section__title">Bring your tools into your designs</h2>
               <p className="section__sub">
-                Open Apps, choose one and install it. It sits in your side panel beside the canvas, ready in every design.
+                The marketplace adds outside tools to the editor: stock photos, moving graphics, your Notion pages and video uploads. You approve what each one can do.
               </p>
             </div>
-            <div className="reveal">
+            <div>
               <AppsShowcase />
             </div>
           </div>
@@ -178,8 +241,8 @@ export default function Home() {
         {/* ── Ask Studio ───────────────────────────────────── */}
         <section className="section" id="ask-studio" aria-labelledby="ask-title">
           <div className="container">
-            <div className="section__intro reveal" data-reveal="right">
-              <h2 id="ask-title" className="section__title">Ask Studio: write with AI, on your own key</h2>
+            <div className="section__intro">
+              <h2 id="ask-title" className="section__title">Ask Studio: write with AI, on <Sel>your own key</Sel></h2>
               <p className="section__sub">
                 Describe what you need and get a draft in your Doc. You pick the AI model, and your key stays on your server.
               </p>
@@ -190,34 +253,25 @@ export default function Home() {
 
         {/* ── Templates ────────────────────────────────────── */}
         <section className="section" id="templates" aria-labelledby="tpl-title">
-          <div className="container section__intro reveal">
-            <h2 id="tpl-title" className="section__title">Templates for every occasion</h2>
-            <div className="section__actions">
-              <a href="#download" className="btn btn--violet">Download Design Studio</a>
-              <a href="#websites" className="btn btn--outline">See the website builder</a>
-            </div>
-          </div>
-          <div className="wall" aria-label="Template examples">
-            <div className="wall__row" data-parallax="0.05">
-              <ul className="wall__track">
-                {[0, 1].map((dup) =>
-                  websiteTemplates.map((t) => (
-                    <li key={`${dup}-${t.src}`} className="wall__item wall__item--site" aria-hidden={dup === 1 ? true : undefined}>
-                      <img src={t.src} alt={dup === 1 ? "" : t.alt} loading="lazy" decoding="async" width={1400} height={830} />
+          <div className="container">
+            <h2 id="tpl-title" className="section__title">Start from a template, then make it yours</h2>
+            <div className="wall" aria-label="Template examples">
+              <ul className="wall__row wall__row--sites">
+                {websiteTemplates.map((t, i) => {
+                  const img = <img src={t.src} alt={t.alt} loading="lazy" decoding="async" width={1400} height={830} />;
+                  return (
+                    <li key={t.src} className="wall__item wall__item--site">
+                      {i === 0 ? <Sel>{img}</Sel> : img}
                     </li>
-                  )),
-                )}
+                  );
+                })}
               </ul>
-            </div>
-            <div className="wall__row wall__row--rev" data-parallax="-0.06">
-              <ul className="wall__track">
-                {[0, 1].map((dup) =>
-                  graphicTemplates.map((g) => (
-                    <li key={`${dup}-${g.cls}`} className={`wall__item gtpl ${g.cls}`} aria-hidden={dup === 1 ? true : undefined}>
-                      <b>{g.title}</b>
-                    </li>
-                  )),
-                )}
+              <ul className="wall__row wall__row--graphics">
+                {graphicTemplates.map((g) => (
+                  <li key={g.cls} className={`wall__item gtpl ${g.cls}`}>
+                    <b>{g.title}</b>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -226,37 +280,45 @@ export default function Home() {
         {/* ── Bento: teamwork, assets, offline, browser ────── */}
         <section className="section section--tight" id="together" aria-labelledby="together-title">
           <div className="container">
-            <h2 id="together-title" className="section__title reveal">Made for the way you work</h2>
+            <h2 id="together-title" className="section__title">Work <Sel>together</Sel>, offline or on your own server</h2>
             <div className="bento">
-              <article className="bcard bcard--violet bcard--wide reveal" data-reveal="left">
+              <article className="bcard bcard--full">
                 <div className="bcard__text">
                   <h3>Design together, live</h3>
-                  <p>Invite friends, clients or your team. Everyone edits at once, sees each other&rsquo;s cursors and leaves comments right on the page.</p>
+                  <p>Invite friends, clients or your team. Everyone edits at once and sees each other&rsquo;s cursors, with the picture they chose beside their name.</p>
                 </div>
-                <CommentsMockup />
+                <LiveMockup />
+                <ul className="teamwork">
+                  {teamwork.map((t) => (
+                    <li key={t.title}>
+                      <h4>{t.title}</h4>
+                      <p>{t.text}</p>
+                    </li>
+                  ))}
+                </ul>
               </article>
-              <article className="bcard bcard--peach reveal" data-reveal="right" id="assets">
+              <article className="bcard bcard--peach" id="assets">
                 <div className="bcard__text">
                   <h3>Your photos, always at hand</h3>
                   <p>Keep photos, logos and graphics in one library and drag them into any design.</p>
                 </div>
                 <AssetsMockup />
               </article>
-              <article className="bcard bcard--mint reveal" data-reveal="left" id="offline">
+              <article className="bcard bcard--mint" id="offline">
                 <div className="bcard__text">
                   <h3>Works offline</h3>
                   <p>Keep designing on a plane or in a café with bad signal. Your work is saved on your computer.</p>
                 </div>
                 <OfflineArt />
               </article>
-              <article className="bcard bcard--blue bcard--wide reveal" data-reveal="right">
+              <article className="bcard bcard--blue">
                 <div className="bcard__text">
                   <h3>On your desktop and in your browser</h3>
                   <p>Install it on your Mac or Windows PC, or open it in a web browser when you&rsquo;d rather not install anything.</p>
                 </div>
                 <BrowserArt />
               </article>
-              <article className="bcard bcard--dark bcard--wide reveal" data-reveal="left" id="self-hosted">
+              <article className="bcard bcard--dark bcard--wide" id="self-hosted">
                 <div className="bcard__text">
                   <span className="sh-bento-badge">Self-hosted</span>
                   <h3>Run it on your own server</h3>
@@ -267,9 +329,9 @@ export default function Home() {
                 </div>
                 <ServerMockup />
               </article>
-              <article className="bcard bcard--violet reveal" data-reveal="scale" id="ask-studio-card">
+              <article className="bcard bcard--violet" id="ask-studio-card">
                 <div className="bcard__text">
-                  <h3>Write faster with Ask Studio</h3>
+                  <h3>Draft text with Ask Studio</h3>
                   <p>Draft summaries, proposals and notes right in a Doc. Bring your own AI key: it stays on your server, and it&rsquo;s off until you add one.</p>
                 </div>
                 <ul className="ask-models" aria-label="Supported AI providers">
@@ -286,10 +348,10 @@ export default function Home() {
         {/* ── FAQ ──────────────────────────────────────────── */}
         <section className="section" id="faq" aria-labelledby="faq-title">
           <div className="container faq">
-            <h2 id="faq-title" className="section__title reveal">Questions? We&rsquo;ve got answers</h2>
+            <h2 id="faq-title" className="section__title">Common questions</h2>
             <div className="faq__list">
               {faqs.map((f) => (
-                <details key={f.q} className="faq__item reveal">
+                <details key={f.q} className="faq__item">
                   <summary>
                     <span>{f.q}</span>
                     <i aria-hidden="true" />
@@ -304,9 +366,9 @@ export default function Home() {
         {/* ── Download CTA ─────────────────────────────────── */}
         <section className="cta" id="download" aria-labelledby="cta-title">
           <div className="container cta__inner">
-            <h2 id="cta-title" className="reveal">Start designing today</h2>
-            <p className="cta__sub reveal">Download Design Studio for your computer. Version {release.version}.</p>
-            <div className="cta__cards reveal">
+            <h2 id="cta-title">Download Design Studio for Mac or Windows</h2>
+            <p className="cta__sub">Version {release.version}. There&rsquo;s also a browser version if you&rsquo;d rather not install anything.</p>
+            <div className="cta__cards">
               <a className="os-card" href={release.mac.href} download>
                 <AppleIcon className="os-card__icon" />
                 <span className="os-card__text">
@@ -334,7 +396,7 @@ export default function Home() {
             <a href="#top" className="brand" aria-label="Design Studio home">
               <Logo id="logo-foot" /> <span>Design Studio</span>
             </a>
-            <p>Design anything. Publish anywhere.</p>
+            <p>Posters, decks, videos, documents and websites in one app</p>
           </div>
           <nav aria-label="Product">
             <h2 className="footer__h">Product</h2>

@@ -15,7 +15,7 @@ function detectOS(): OS | null {
   return null;
 }
 
-/** Download buttons for use on the gradient bands: the visitor's platform first, the other one next to it. */
+/** Download buttons: the visitor's platform first, the other one next to it. */
 export function DownloadButtons({ size = "lg", showMeta = true }: { size?: "lg" | "md"; showMeta?: boolean }) {
   // Static HTML defaults to Mac; the effect swaps to Windows after load when that's what the visitor uses.
   const [os, setOs] = useState<OS>("mac");
@@ -33,11 +33,11 @@ export function DownloadButtons({ size = "lg", showMeta = true }: { size?: "lg" 
   return (
     <div className={`dl dl--${size}`}>
       <div className="dl__row">
-        <a className="btn btn--white" href={primary.href} download>
+        <a className="btn btn--violet" href={primary.href} download>
           <PrimaryIcon className="btn__icon" />
           <span>{primary.label}</span>
         </a>
-        <a className="btn btn--glass" href={other.href} download aria-label={other.label}>
+        <a className="btn btn--outline" href={other.href} download aria-label={other.label}>
           {otherKey === "mac" ? <AppleIcon className="btn__icon" /> : <WindowsIcon className="btn__icon" />}
           <span>{otherKey === "mac" ? "Mac" : "Windows"}</span>
           <DownloadIcon className="btn__icon btn__icon--sm" />

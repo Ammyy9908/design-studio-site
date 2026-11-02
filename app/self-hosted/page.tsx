@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Logo, ServerIcon, DockerIcon, ShieldIcon, DatabaseIcon } from "@/components/Icons";
+import { Logo } from "@/components/Icons";
 import { PageEffects } from "@/components/PageEffects";
 import { SelfHostedGuide } from "@/components/SelfHostedGuide";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, release } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -43,8 +44,9 @@ export default function SelfHostedPage() {
               </li>
             ))}
           </ul>
+          <ThemeToggle />
           <a href="/#download" className="btn btn--violet btn--sm">
-            Download App
+            Download
           </a>
         </nav>
       </header>
@@ -53,39 +55,16 @@ export default function SelfHostedPage() {
         {/* ── Guide Hero ───────────────────────────────────── */}
         <section className="sh-hero" aria-labelledby="sh-hero-title">
           <div className="container sh-hero__inner">
-            <div className="sh-hero__badge-row reveal">
-              <span className="sh-badge sh-badge--violet">Self-Hosted</span>
-              <span className="sh-badge sh-badge--mint">Docker Compose</span>
-              <span className="sh-badge sh-badge--blue">Kubernetes</span>
-            </div>
-            <h1 id="sh-hero-title" className="sh-hero__title reveal" data-reveal="scale">
-              Run Design Studio on Your Own Server
+            <h1 id="sh-hero-title" className="sh-hero__title">
+              Run Design Studio on your own server
             </h1>
-            <p className="sh-hero__lead reveal">
+            <p className="sh-hero__lead">
               Keep your team&rsquo;s designs, photos and accounts on your own infrastructure. The usual install is one
               Docker Compose bundle, with its own database, file storage and automatic HTTPS. The same server also runs
               behind your own proxy, next to a database you already have, as a normal process, or on Kubernetes.
             </p>
 
-            {/* Spec Bar */}
-            <div className="sh-hero__specs reveal">
-              <div className="sh-hero__spec">
-                <DockerIcon className="sh-hero__spec-icon" />
-                <span>Docker 24+</span>
-              </div>
-              <div className="sh-hero__spec">
-                <DatabaseIcon className="sh-hero__spec-icon" />
-                <span>Database &amp; file storage included</span>
-              </div>
-              <div className="sh-hero__spec">
-                <ShieldIcon className="sh-hero__spec-icon" />
-                <span>Automatic HTTPS</span>
-              </div>
-              <div className="sh-hero__spec">
-                <ServerIcon className="sh-hero__spec-icon" />
-                <span>Linux x86-64 &amp; arm64</span>
-              </div>
-            </div>
+            <p className="sh-hero__specs">Docker 24+ · Database &amp; file storage included · Automatic HTTPS · Linux x86-64 &amp; arm64</p>
           </div>
         </section>
 

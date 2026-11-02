@@ -28,8 +28,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
       <head>
-        {/* Mark JS as available before paint so reveal animations start hidden only when they can run. */}
+        {/* Mark JS as available before paint: the format showcase stacks its panels only when it can switch them. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Apply a saved theme before paint, so a dark choice never flashes light. */}
+        <script dangerouslySetInnerHTML={{ __html: "try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}" }} />
       </head>
       <body>{children}</body>
     </html>

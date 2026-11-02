@@ -350,6 +350,7 @@ export function SelfHostedGuide() {
             aria-current={activeTab === id ? "true" : undefined}
           >
             <Icon className="sh-tab__icon" /> {label}
+            {activeTab === id && <><i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" /></>}
           </button>
         ))}
       </nav>
@@ -359,7 +360,7 @@ export function SelfHostedGuide() {
         <section className="sh-section" aria-labelledby="qs-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--violet">5 steps · about 10 minutes</span>
+              <span className="sh-badge">5 steps · about 10 minutes</span>
               <h2 id="qs-title" className="sh-card__title">
                 {mode === "https" ? "Set up a server for your team" : "Try Design Studio on one computer"}
               </h2>
@@ -571,7 +572,7 @@ docker compose ps`
         <section className="sh-section" aria-labelledby="proxy-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--mint">Docker Compose</span>
+              <span className="sh-badge">Docker Compose</span>
               <h2 id="proxy-title" className="sh-card__title">Behind your own proxy</h2>
               <p className="sh-card__sub">
                 Use this when nginx, Traefik, Caddy or a Cloudflare tunnel already terminates HTTPS. Compose still runs
@@ -617,7 +618,7 @@ docker compose ps`}
         <section className="sh-section" aria-labelledby="db-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--mint">Docker Compose image</span>
+              <span className="sh-badge">Docker Compose image</span>
               <h2 id="db-title" className="sh-card__title">Your own database and storage</h2>
               <p className="sh-card__sub">
                 Run only the Design Studio container. Point it at a PostgreSQL and an S3-compatible bucket you already
@@ -675,7 +676,7 @@ docker run -d --name studio --restart unless-stopped \\
         <section className="sh-section" aria-labelledby="k8s-one-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--blue">Kubernetes</span>
+              <span className="sh-badge">Kubernetes</span>
               <h2 id="k8s-one-title" className="sh-card__title">One server pod</h2>
               <p className="sh-card__sub">
                 One studio pod, one Postgres, and object storage. Leave <code>REALTIME_URL</code> empty. The WebSocket,
@@ -778,7 +779,7 @@ spec:
         <section className="sh-section" aria-labelledby="k8s-many-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--blue">Kubernetes</span>
+              <span className="sh-badge">Kubernetes</span>
               <h2 id="k8s-many-title" className="sh-card__title">Several server pods</h2>
               <p className="sh-card__sub">
                 Scale the studio Deployment for designs, accounts, photos and publish. Cursors and presence stay on one
@@ -866,7 +867,7 @@ spec:
         <section className="sh-section" aria-labelledby="process-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--sun">On the machine</span>
+              <span className="sh-badge">On the machine</span>
               <h2 id="process-title" className="sh-card__title">Run the server as a process</h2>
               <p className="sh-card__sub">
                 The download zip is a Docker image. This guide builds the server from the source repository and runs it
@@ -926,7 +927,7 @@ S3_USE_SSL=false \\
         <section className="sh-section" aria-labelledby="req-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--blue">Before you start</span>
+              <span className="sh-badge">Before you start</span>
               <h2 id="req-title" className="sh-card__title">Server requirements</h2>
               <p className="sh-card__sub">
                 {host === "kubernetes"
@@ -992,7 +993,7 @@ S3_USE_SSL=false \\
         <section className="sh-section" aria-labelledby="env-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--violet">Settings reference</span>
+              <span className="sh-badge">Settings reference</span>
               <h2 id="env-title" className="sh-card__title">
                 Settings in <code>.env</code>
               </h2>
@@ -1059,7 +1060,7 @@ S3_USE_SSL=false \\
         <section className="sh-section" aria-labelledby="desktop-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--peach">Desktop app</span>
+              <span className="sh-badge">Desktop app</span>
               <h2 id="desktop-title" className="sh-card__title">Connect the desktop app to your server</h2>
               <p className="sh-card__sub">
                 Everyone on your team installs the same app. It asks for your server the first time it opens, and from
@@ -1130,7 +1131,7 @@ S3_USE_SSL=false \\
         <section className="sh-section" aria-labelledby="email-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--sun">Email</span>
+              <span className="sh-badge">Email</span>
               <h2 id="email-title" className="sh-card__title">Sign-up and password emails</h2>
               <p className="sh-card__sub">
                 Design Studio sends verification and password reset emails through your SMTP provider. People need a
@@ -1188,7 +1189,7 @@ docker compose logs studio | grep -i "send email"`}
         <section className="sh-section" aria-labelledby="domains-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--mint">Websites</span>
+              <span className="sh-badge">Websites</span>
               <h2 id="domains-title" className="sh-card__title">Websites on their own domains</h2>
               <p className="sh-card__sub">
                 Someone who publishes a website can serve it on a domain they own. They add it in the Publish panel,
@@ -1285,7 +1286,7 @@ docker compose logs studio | grep -i "send email"`}
         <section className="sh-section" aria-labelledby="ask-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--violet">Ask Studio</span>
+              <span className="sh-badge">Ask Studio</span>
               <h2 id="ask-title" className="sh-card__title">AI writing assistant, on your own key</h2>
               <p className="sh-card__sub">
                 Ask Studio drafts text in Docs from a prompt. It runs on an AI model that <strong>you</strong> provide, so
@@ -1387,7 +1388,7 @@ IMAGE_GENERATION_API_KEY=<your provider key>
         <section className="sh-section" aria-labelledby="maint-title">
           <div className="sh-card">
             <div className="sh-card__header">
-              <span className="sh-badge sh-badge--coral">Operations</span>
+              <span className="sh-badge">Operations</span>
               <h2 id="maint-title" className="sh-card__title">Backups, restores and updates</h2>
               <p className="sh-card__sub">
                 A backup has two parts: the database and the stored files. Take them together, then copy them off the
