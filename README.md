@@ -1,6 +1,6 @@
-# Design Studio — download site
+# Makora — download site
 
-The marketing and download page for Design Studio. It's a Next.js app exported as
+The marketing and download page for Makora. It's a Next.js app exported as
 plain static files (`output: "export"`), so the result in `out/` can be served by any
 web server. The Docker image serves it with nginx on port 80.
 
@@ -34,8 +34,8 @@ The download buttons link to relative paths:
 
 | Platform | Path                                   |
 | -------- | -------------------------------------- |
-| macOS    | `downloads/Design-Studio-mac.dmg`      |
-| Windows  | `downloads/Design-Studio-windows.exe`  |
+| macOS    | `downloads/Makora-mac.dmg`      |
+| Windows  | `downloads/Makora-windows.exe`  |
 
 Either drop the files into `public/downloads/` before building (they're git-ignored),
 or mount a folder into the container at runtime:

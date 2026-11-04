@@ -46,7 +46,7 @@ const faqs = [
   },
   {
     q: "Which computers does it run on?",
-    a: "Design Studio runs on Macs with Apple silicon (M1 or newer) using macOS 12 or later, and on PCs with Windows 10 or later. There's also a browser version if you'd rather not install anything.",
+    a: "Makora runs on Macs with Apple silicon (M1 or newer) using macOS 12 or later, and on PCs with Windows 10 or later. There's also a browser version if you'd rather not install anything.",
   },
   {
     q: "Does it work without an internet connection?",
@@ -58,7 +58,7 @@ const faqs = [
   },
   {
     q: "Can my website use my own domain?",
-    a: "Yes, on a self-hosted server open to the internet. Add the domain in the Publish panel and create the two DNS records it shows you. Once they're found, your site opens at your domain with HTTPS set up for you. Visitors only reach your website there, never the Design Studio app or anyone's account.",
+    a: "Yes, on a self-hosted server open to the internet. Add the domain in the Publish panel and create the two DNS records it shows you. Once they're found, your site opens at your domain with HTTPS set up for you. Visitors only reach your website there, never the Makora app or anyone's account.",
   },
   {
     q: "Can I work on a design with other people?",
@@ -86,7 +86,7 @@ const faqs = [
   },
   {
     q: "What are apps?",
-    a: "Apps add outside tools to the editor, like free stock photos, moving graphics, videos and pictures from your Notion pages. Get them from Apps on the home screen, and they appear in your side panel. Apps need an internet connection and a Design Studio account.",
+    a: "Apps add outside tools to the editor, like free stock photos, moving graphics, videos and pictures from your Notion pages. Get them from Apps on the home screen, and they appear in your side panel. Apps need an internet connection and a Makora account.",
   },
   {
     q: "Why does an app say it needs setting up?",
@@ -109,7 +109,7 @@ const faqs = [
     a: "Yes. The usual install is one Docker Compose bundle with its own database, file storage and automatic HTTPS. The Self-Hosted Guide also covers your own proxy, a database and file storage you already run, a process without Docker, and Kubernetes.",
   },
   {
-    q: "Does Design Studio include AI writing?",
+    q: "Does Makora include AI writing?",
     a: "Ask Studio drafts text in Docs and powers the AI Builder for websites, but it runs on an AI model you provide: your own key for OpenAI, Anthropic or a model on your own network. The key stays on your server and the features are off until you add one. What people type is sent to the provider you choose. The Self-Hosted Guide shows how to set it up.",
   },
   {
@@ -136,8 +136,8 @@ export default function Home() {
 
       <header className="site-header">
         <nav className="nav container" aria-label="Main">
-          <a href="#top" className="brand" aria-label="Design Studio home">
-            <Logo id="logo-head" /> <span>Design Studio</span>
+          <a href="#top" className="brand" aria-label="Makora home">
+            <Logo id="logo-head" /> <span>Makora</span>
           </a>
           <ul className="nav__links">
             {navLinks.map((l) => (
@@ -189,11 +189,11 @@ export default function Home() {
               <figure className="board board--editor" style={{ "--x": "26%", "--y": "39%", "--w": "84%" } as CSSProperties}>
                 <figcaption>In the editor</figcaption>
                 <BrowserFrame
-                  url="Design Studio"
+                  url="Makora"
                   app
                   eager
                   src="assets/website-effects-panel.webp"
-                  alt="The Design Studio editor: an outline of the page on the left, a website being edited in the middle and style controls on the right"
+                  alt="The Makora editor: an outline of the page on the left, a website being edited in the middle and style controls on the right"
                 />
               </figure>
             </div>
@@ -366,7 +366,7 @@ export default function Home() {
         {/* ── Download CTA ─────────────────────────────────── */}
         <section className="cta" id="download" aria-labelledby="cta-title">
           <div className="container cta__inner">
-            <h2 id="cta-title">Download Design Studio for Mac or Windows</h2>
+            <h2 id="cta-title">Download Makora for Mac or Windows</h2>
             <p className="cta__sub">Version {release.version}. There&rsquo;s also a browser version if you&rsquo;d rather not install anything.</p>
             <div className="cta__cards">
               <a className="os-card" href={release.mac.href} download>
@@ -393,8 +393,8 @@ export default function Home() {
       <footer className="footer">
         <div className="container footer__grid">
           <div className="footer__brand">
-            <a href="#top" className="brand" aria-label="Design Studio home">
-              <Logo id="logo-foot" /> <span>Design Studio</span>
+            <a href="#top" className="brand" aria-label="Makora home">
+              <Logo id="logo-foot" /> <span>Makora</span>
             </a>
             <p>Posters, decks, videos, documents and websites in one app</p>
           </div>
@@ -427,7 +427,7 @@ export default function Home() {
           </nav>
         </div>
         <div className="container footer__base">
-          <span>© {new Date().getFullYear()} Design Studio</span>
+          <span>© {new Date().getFullYear()} Makora</span>
           <span>Version {release.version} · macOS &amp; Windows</span>
         </div>
       </footer>

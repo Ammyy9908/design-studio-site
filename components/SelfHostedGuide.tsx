@@ -41,7 +41,7 @@ const settings = [
     group: "general",
     required: true,
     example: "https://studio.example.com",
-    description: "The address your team opens Design Studio at. Share links, sign-in and emails use it. No trailing slash.",
+    description: "The address your team opens Makora at. Share links, sign-in and emails use it. No trailing slash.",
   },
   {
     name: "LIVE_URL",
@@ -96,7 +96,7 @@ const settings = [
     name: "SMTP_FROM",
     group: "email",
     required: false,
-    example: "Design Studio <no-reply@studio.example.com>",
+    example: "Makora <no-reply@studio.example.com>",
     description: "The sender address. Use one your email provider has verified for your domain.",
   },
   {
@@ -188,7 +188,7 @@ const settings = [
     group: "general",
     required: false,
     example: "true",
-    description: "Keep true when Design Studio runs behind the included HTTPS proxy, a load balancer or a tunnel. Set false only if visitors reach the server directly.",
+    description: "Keep true when Makora runs behind the included HTTPS proxy, a load balancer or a tunnel. Set false only if visitors reach the server directly.",
   },
   {
     name: "REALTIME_URL",
@@ -196,7 +196,7 @@ const settings = [
     required: false,
     example: "(empty = inside the server)",
     description:
-      "Leave empty and the WebSocket for cursors and presence runs inside the Design Studio server. Set a private address such as http://realtime:8090 only when several server copies share one WebSocket process.",
+      "Leave empty and the WebSocket for cursors and presence runs inside the Makora server. Set a private address such as http://realtime:8090 only when several server copies share one WebSocket process.",
   },
   {
     name: "REALTIME_SECRET",
@@ -234,7 +234,7 @@ const settings = [
     group: "general",
     required: false,
     example: release.version,
-    description: "Which Design Studio server version to run. Change it when you upgrade.",
+    description: "Which Makora server version to run. Change it when you upgrade.",
   },
 ];
 
@@ -362,11 +362,11 @@ export function SelfHostedGuide() {
             <div className="sh-card__header">
               <span className="sh-badge">5 steps · about 10 minutes</span>
               <h2 id="qs-title" className="sh-card__title">
-                {mode === "https" ? "Set up a server for your team" : "Try Design Studio on one computer"}
+                {mode === "https" ? "Set up a server for your team" : "Try Makora on one computer"}
               </h2>
               <p className="sh-card__sub">
                 {mode === "https"
-                  ? "Run Design Studio on a Linux server with your own domain. HTTPS certificates are issued and renewed automatically."
+                  ? "Run Makora on a Linux server with your own domain. HTTPS certificates are issued and renewed automatically."
                   : "Run everything on your own computer at localhost:8080. No domain needed, and verification emails appear in the server log."}
               </p>
             </div>
@@ -404,7 +404,7 @@ export function SelfHostedGuide() {
                                 <code>studio.example.com</code>
                               </td>
                               <td>Your server&rsquo;s IP address</td>
-                              <td>Design Studio</td>
+                              <td>Makora</td>
                             </tr>
                             <tr>
                               <td>
@@ -438,7 +438,7 @@ export function SelfHostedGuide() {
                 <div className="sh-step__content">
                   <h3>Download the server bundle</h3>
                   <p>
-                    The bundle contains everything needed to run Design Studio: the server image, the Docker Compose file and
+                    The bundle contains everything needed to run Makora: the server image, the Docker Compose file and
                     a settings template.
                   </p>
                   <p>
@@ -498,7 +498,7 @@ TRUST_PROXY=true
 SMTP_HOST=smtp.example-provider.com
 SMTP_USER=...
 SMTP_PASS=...
-SMTP_FROM=Design Studio <no-reply@studio.example.com>`
+SMTP_FROM=Makora <no-reply@studio.example.com>`
                         : `PUBLIC_URL=http://localhost:8080
 
 SESSION_SECRET=<secret 1>
@@ -517,7 +517,7 @@ TRUST_PROXY=false`
               <div className="sh-step">
                 <div className="sh-step__num">4</div>
                 <div className="sh-step__content">
-                  <h3>Start Design Studio</h3>
+                  <h3>Start Makora</h3>
                   <CodeBlock
                     title="Terminal"
                     language="bash"
@@ -621,7 +621,7 @@ docker compose ps`}
               <span className="sh-badge">Docker Compose image</span>
               <h2 id="db-title" className="sh-card__title">Your own database and storage</h2>
               <p className="sh-card__sub">
-                Run only the Design Studio container. Point it at a PostgreSQL and an S3-compatible bucket you already
+                Run only the Makora container. Point it at a PostgreSQL and an S3-compatible bucket you already
                 have: Amazon S3, Cloudflare R2, Garage, or a MinIO of your own. The WebSocket stays inside the
                 container.
               </p>
@@ -680,7 +680,7 @@ docker run -d --name studio --restart unless-stopped \\
               <h2 id="k8s-one-title" className="sh-card__title">One server pod</h2>
               <p className="sh-card__sub">
                 One studio pod, one Postgres, and object storage. Leave <code>REALTIME_URL</code> empty. The WebSocket,
-                Live Q&amp;A and the phone remote all stay on that pod. No Helm chart ships with Design Studio.
+                Live Q&amp;A and the phone remote all stay on that pod. No Helm chart ships with Makora.
               </p>
             </div>
             <div className="sh-steps">
@@ -931,10 +931,10 @@ S3_USE_SSL=false \\
               <h2 id="req-title" className="sh-card__title">Server requirements</h2>
               <p className="sh-card__sub">
                 {host === "kubernetes"
-                  ? "A cluster that can run the Design Studio image, plus PostgreSQL and S3-compatible storage. Your designs, photos and accounts stay there."
+                  ? "A cluster that can run the Makora image, plus PostgreSQL and S3-compatible storage. Your designs, photos and accounts stay there."
                   : host === "process"
                     ? "A Linux machine with Go and Node for the build, plus PostgreSQL and S3-compatible storage beside the process."
-                    : "The bundle runs the Design Studio server together with its own database and file storage, so one machine is all you need. Your designs, photos and accounts stay on it."}
+                    : "The bundle runs the Makora server together with its own database and file storage, so one machine is all you need. Your designs, photos and accounts stay on it."}
               </p>
             </div>
 
@@ -1072,7 +1072,7 @@ S3_USE_SSL=false \\
               <div className="sh-step">
                 <div className="sh-step__num">1</div>
                 <div className="sh-step__content">
-                  <h3>Install and open Design Studio</h3>
+                  <h3>Install and open Makora</h3>
                   <p>
                     <a href={`/${release.mac.href}`} download>
                       Download for Mac
@@ -1134,7 +1134,7 @@ S3_USE_SSL=false \\
               <span className="sh-badge">Email</span>
               <h2 id="email-title" className="sh-card__title">Sign-up and password emails</h2>
               <p className="sh-card__sub">
-                Design Studio sends verification and password reset emails through your SMTP provider. People need a
+                Makora sends verification and password reset emails through your SMTP provider. People need a
                 verified email to share designs and publish.
               </p>
             </div>
@@ -1159,7 +1159,7 @@ S3_USE_SSL=false \\
 SMTP_PORT=587
 SMTP_USER=<from your provider>
 SMTP_PASS=<from your provider>
-SMTP_FROM=Design Studio <no-reply@studio.example.com>`}
+SMTP_FROM=Makora <no-reply@studio.example.com>`}
             />
 
             <h3>3. Apply and test</h3>
@@ -1297,7 +1297,7 @@ docker compose logs studio | grep -i "send email"`}
             <div className="sh-callout sh-callout--warning">
               <strong>Prompts go to your AI provider.</strong> Everything people type into Ask Studio is sent to the
               provider you configure, and so is the document&rsquo;s text (up to 12,000 characters) when they tick
-              &ldquo;Use this document as context&rdquo;. Design Studio doesn&rsquo;t store prompts or answers. For full
+              &ldquo;Use this document as context&rdquo;. Makora doesn&rsquo;t store prompts or answers. For full
               control, point it at a model on your own network.
             </div>
 

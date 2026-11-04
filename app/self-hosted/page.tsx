@@ -6,13 +6,13 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, release } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Self-Hosted Guide — Design Studio",
+  title: "Self-Hosted Guide — Makora",
   description:
-    "Run Design Studio on your own server. The usual install is Docker Compose. The same server also runs behind your own proxy, with your own database and storage, as a process, or on Kubernetes.",
+    "Run Makora on your own server. The usual install is Docker Compose. The same server also runs behind your own proxy, with your own database and storage, as a process, or on Kubernetes.",
   openGraph: {
-    title: "Design Studio — Self-Hosted Guide",
+    title: "Makora — Self-Hosted Guide",
     description:
-      "Self-host Design Studio with Docker Compose, your own proxy, your own database and storage, a system process, or Kubernetes.",
+      "Self-host Makora with Docker Compose, your own proxy, your own database and storage, a system process, or Kubernetes.",
     type: "article",
   },
 };
@@ -28,8 +28,8 @@ export default function SelfHostedPage() {
       {/* ── Navigation Header ────────────────────────────── */}
       <header className="site-header">
         <nav className="nav container" aria-label="Main">
-          <a href="/" className="brand" aria-label="Design Studio home">
-            <Logo id="logo-sh" /> <span>Design Studio</span>
+          <a href="/" className="brand" aria-label="Makora home">
+            <Logo id="logo-sh" /> <span>Makora</span>
           </a>
           <ul className="nav__links">
             {navLinks.map((l) => (
@@ -56,7 +56,7 @@ export default function SelfHostedPage() {
         <section className="sh-hero" aria-labelledby="sh-hero-title">
           <div className="container sh-hero__inner">
             <h1 id="sh-hero-title" className="sh-hero__title">
-              Run Design Studio on your own server
+              Run Makora on your own server
             </h1>
             <p className="sh-hero__lead">
               Keep your team&rsquo;s designs, photos and accounts on your own infrastructure. The usual install is one
@@ -101,8 +101,8 @@ export default function SelfHostedPage() {
       <footer className="footer">
         <div className="container footer__grid">
           <div className="footer__brand">
-            <a href="/" className="brand" aria-label="Design Studio home">
-              <Logo id="logo-sh-foot" /> <span>Design Studio</span>
+            <a href="/" className="brand" aria-label="Makora home">
+              <Logo id="logo-sh-foot" /> <span>Makora</span>
             </a>
             <p>Design anything. Publish anywhere.</p>
           </div>
@@ -160,7 +160,7 @@ export default function SelfHostedPage() {
           </nav>
         </div>
         <div className="container footer__base">
-          <span>© {new Date().getFullYear()} Design Studio</span>
+          <span>© {new Date().getFullYear()} Makora</span>
           <span>Version {release.version}</span>
         </div>
       </footer>

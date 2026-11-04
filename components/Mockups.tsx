@@ -181,10 +181,10 @@ export function OfflineArt() {
 
 export function BrowserArt() {
   return (
-    <div className="webapp" role="img" aria-label="Illustration of Design Studio open in a web browser tab next to the desktop app">
+    <div className="webapp" role="img" aria-label="Illustration of Makora open in a web browser tab next to the desktop app">
       <span className="webapp__win webapp__win--back"><i /><i /><i /></span>
       <span className="webapp__win">
-        <span className="webapp__tabs"><b>Design Studio</b><i /></span>
+        <span className="webapp__tabs"><b>Makora</b><i /></span>
         <span className="webapp__body">
           <i className="webapp__rail" />
           <i className="webapp__canvas" />
@@ -196,7 +196,7 @@ export function BrowserArt() {
 
 export function ServerMockup() {
   return (
-    <div className="server-art" role="img" aria-label="Illustration of a self-hosted Design Studio server running in Docker Compose">
+    <div className="server-art" role="img" aria-label="Illustration of a self-hosted Makora server running in Docker Compose">
       <div className="server-art__win">
         <div className="server-art__bar" aria-hidden="true">
           <i /><i /><i />
@@ -206,7 +206,7 @@ export function ServerMockup() {
           <div className="server-art__row">
             <span className="server-art__status" />
             <span className="server-art__svc">studio</span>
-            <span className="server-art__tag">Design Studio</span>
+            <span className="server-art__tag">Makora</span>
           </div>
           <div className="server-art__row">
             <span className="server-art__status" />

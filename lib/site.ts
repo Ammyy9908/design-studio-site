@@ -3,15 +3,15 @@ export const release = {
   version: "0.1.33",
   mac: {
     label: "Download for Mac",
-    href: "downloads/Design-Studio-mac.dmg",
+    href: "downloads/Makora-mac.dmg",
     requirements: "macOS 12 or later · Apple silicon (M1 or newer)",
   },
-  // A zip for now (unzip, then run Design Studio.exe); an installer needs makensis, which runs
+  // A zip for now (unzip, then run Makora.exe); an installer needs makensis, which runs
   // only under Rosetta on Apple silicon build machines.
   windows: {
     label: "Download for Windows",
-    href: "downloads/Design-Studio-windows.zip",
-    requirements: "Windows 10 or later · 64-bit · unzip, then run Design Studio.exe",
+    href: "downloads/Makora-windows.zip",
+    requirements: "Windows 10 or later · 64-bit · unzip, then run Makora.exe",
   },
   // The self-hosted server, one bundle per CPU architecture (made by deploy/self-hosted/make-bundle.sh
   // in the app repository): the server image (docker load), compose file and settings template.

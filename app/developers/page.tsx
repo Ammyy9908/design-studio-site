@@ -7,9 +7,9 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, release } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Developer Docs — Design Studio",
+  title: "Developer Docs — Makora",
   description:
-    "Build apps for Design Studio on your own self-hosted server: turn on the developer portal, follow the quickstart, and read the manifest, SDK and sandbox reference.",
+    "Build apps for Makora on your own self-hosted server: turn on the developer portal, follow the quickstart, and read the manifest, SDK and sandbox reference.",
 };
 
 const sections = [
@@ -178,8 +178,8 @@ export default function DevelopersPage() {
 
       <header className="site-header">
         <nav className="nav container" aria-label="Main">
-          <a href="/" className="brand" aria-label="Design Studio home">
-            <Logo id="logo-dev" /> <span>Design Studio</span>
+          <a href="/" className="brand" aria-label="Makora home">
+            <Logo id="logo-dev" /> <span>Makora</span>
           </a>
           <ul className="nav__links">
             {navLinks.map((l) => (
@@ -205,7 +205,7 @@ export default function DevelopersPage() {
         <section className="sh-hero" aria-labelledby="docs-title">
           <div className="container sh-hero__inner">
             <h1 id="docs-title" className="sh-hero__title">
-              Build apps for Design Studio
+              Build apps for Makora
             </h1>
             <p className="sh-hero__lead">
               Apps are built and reviewed in a developer portal that runs on your own self-hosted server. Download the
@@ -228,7 +228,7 @@ export default function DevelopersPage() {
             <article className="docs__body">
               <section id="overview">
                 <h2>How apps work</h2>
-                <p>An app is a small web page from outside Design Studio. It runs beside the canvas in a sandbox, and everything it does goes through a checkpoint.</p>
+                <p>An app is a small web page from outside Makora. It runs beside the canvas in a sandbox, and everything it does goes through a checkpoint.</p>
                 <ol className="docs__flow">
                   <li><strong>Your app</strong>A sandboxed frame with no network, cookies or storage</li>
                   <li><strong>The editor</strong>Checks each request against what the person approved</li>
@@ -276,7 +276,7 @@ export default function DevelopersPage() {
                 </ol>
                 <p>On Kubernetes or behind your own proxy, set the same three values on the server and route the portal&rsquo;s hostname to it.</p>
                 <div className="sh-callout sh-callout--info">
-                  <strong>The apps you approve stay on your server.</strong> People on it also see apps from the Design Studio marketplace. To limit what they see, set <C>APPS_ALLOWED</C> to <C>none</C> or to a list of app ids. <C>MARKETPLACE_URL=off</C> stops reading the marketplace.
+                  <strong>The apps you approve stay on your server.</strong> People on it also see apps from the Makora marketplace. To limit what they see, set <C>APPS_ALLOWED</C> to <C>none</C> or to a list of app ids. <C>MARKETPLACE_URL=off</C> stops reading the marketplace.
                 </div>
               </section>
 
@@ -420,7 +420,7 @@ export default function DevelopersPage() {
                 </ol>
                 <p>Your code calls the service without the key. The server adds it for that host alone, and removes it from any response that echoes it.</p>
                 <p>A key&rsquo;s limit is shared by everyone using your app. Set <C>perHour</C> a little below it, and use <C>cacheSeconds</C> so people asking the same thing share one answer.</p>
-                <p>For an app from the Design Studio marketplace, such as Pexels, you supply the key yourself in <C>.env</C>, as <C>APP_SECRET_&lt;APP ID&gt;_&lt;NAME&gt;</C>.</p>
+                <p>For an app from the Makora marketplace, such as Pexels, you supply the key yourself in <C>.env</C>, as <C>APP_SECRET_&lt;APP ID&gt;_&lt;NAME&gt;</C>.</p>
               </section>
 
               <section id="accounts">
@@ -451,8 +451,8 @@ export default function DevelopersPage() {
                 <ul>
                   <li>Tokens are encrypted, and kept per person and per app.</li>
                   <li>A token about to expire is refreshed. If that is refused, the person connects again.</li>
-                  <li>The browser must be signed in to Design Studio as the person who asked, so a link sent to someone else can&rsquo;t attach their account to the sender&rsquo;s login.</li>
-                  <li>Design Studio shows a Disconnect button under your app, so people can always start again, even if your app shows an error.</li>
+                  <li>The browser must be signed in to Makora as the person who asked, so a link sent to someone else can&rsquo;t attach their account to the sender&rsquo;s login.</li>
+                  <li>Makora shows a Disconnect button under your app, so people can always start again, even if your app shows an error.</li>
                   <li>Disconnecting or removing your app deletes the token from the server. Revoking it at the provider is up to the person, so handle a 401 by asking them to connect again.</li>
                 </ul>
               </section>
@@ -521,7 +521,7 @@ export default function DevelopersPage() {
 
       <footer className="footer">
         <div className="container footer__base">
-          <span>© {new Date().getFullYear()} Design Studio</span>
+          <span>© {new Date().getFullYear()} Makora</span>
           <span>Version {release.version}</span>
         </div>
       </footer>

@@ -108,7 +108,7 @@ export function AppsShowcase() {
       </aside>
       <aside className="apps__dev">
         <div>
-          <h3>Build an app for Design Studio</h3>
+          <h3>Build an app for Makora</h3>
           <p>An app is a small web page that runs beside the canvas. If you run your own server, you can turn on its developer portal, build and test apps there, and review them before your team sees them.</p>
         </div>
         <a className="btn btn--outline" href="/developers/">

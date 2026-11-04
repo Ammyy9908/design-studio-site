@@ -7,11 +7,11 @@ const sans = Archivo({ subsets: ["latin"], variable: "--font-sans", display: "sw
 const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Design Studio — Design anything, publish anywhere",
+  title: "Makora — Design anything, publish anywhere",
   description:
     "One friendly app for presentations, social posts, videos, posters, invitations, whiteboards, documents and websites. For Mac and Windows.",
   openGraph: {
-    title: "Design Studio",
+    title: "Makora",
     description: "Design anything, publish anywhere. For Mac and Windows.",
     type: "website",
   },

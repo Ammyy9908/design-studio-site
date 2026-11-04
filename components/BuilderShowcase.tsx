@@ -24,10 +24,10 @@ const steps: Step[] = [
     points: ["See every part of the page in a simple outline", "Save a look once and reuse it everywhere"],
     visual: (
       <BrowserFrame
-        url="Design Studio"
+        url="Makora"
         app
         src="assets/website-effects-panel.webp"
-        alt="The Design Studio website editor: an outline of the page on the left, the page in the middle and style controls on the right"
+        alt="The Makora website editor: an outline of the page on the left, the page in the middle and style controls on the right"
       />
     ),
   },

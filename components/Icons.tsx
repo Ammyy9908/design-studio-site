@@ -30,9 +30,9 @@ export const CheckIcon = ({ className }: P) => (
 export const Logo = ({ className }: P & { id?: string }) => (
   <svg width="28" height="28" viewBox="0 0 824 824" aria-hidden="true" focusable="false" className={className}>
     <rect width="824" height="824" rx="186" fill="#24574a" />
-    <circle cx="330" cy="330" r="168" fill="#fff" />
-    <rect x="352" y="352" width="300" height="300" rx="64" fill="#fff" fillOpacity=".88" />
-    <path d="M624 168C632 214 650 232 696 240C650 248 632 266 624 312C616 266 598 248 552 240C598 232 616 214 624 168Z" fill="#fff" />
+    <rect x="196" y="236" width="136" height="370" rx="48" fill="#fff" />
+    <rect x="492" y="236" width="136" height="370" rx="48" fill="#fff" />
+    <path d="M264 300L412 480L560 300" fill="none" stroke="#fff" strokeOpacity=".82" strokeWidth="116" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
