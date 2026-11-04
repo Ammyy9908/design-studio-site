@@ -45,7 +45,7 @@ export function DownloadButtons({ size = "lg", showMeta = true }: { size?: "lg" 
       </div>
       {showMeta && (
         <p className="dl__meta">
-          Version {release.version} · {primary.requirements}
+          Version {release.version} · {primary.requirements} · <a href={`/install/#${os}`}>Help opening it</a>
         </p>
       )}
     </div>

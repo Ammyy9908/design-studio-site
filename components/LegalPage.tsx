@@ -12,12 +12,14 @@ export function LegalPage({
   lead,
   sections,
   children,
+  showUpdated = true,
 }: {
   id: string;
   title: string;
   lead: string;
   sections: readonly (readonly [string, string])[];
   children: ReactNode;
+  showUpdated?: boolean;
 }) {
   return (
     <>
@@ -52,7 +54,7 @@ export function LegalPage({
               {title}
             </h1>
             <p className="sh-hero__lead">{lead}</p>
-            <p className="legal__updated">Last updated {legal.updated}</p>
+            {showUpdated && <p className="legal__updated">Last updated {legal.updated}</p>}
           </div>
         </section>
 

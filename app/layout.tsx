@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Archivo, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
+import { DownloadHelp } from "@/components/DownloadHelp";
 
 const sans = Archivo({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", display: "swap" });
@@ -56,7 +57,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* Apply a saved theme before paint, so a dark choice never flashes light. */}
         <script dangerouslySetInnerHTML={{ __html: "try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}" }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <DownloadHelp />
+      </body>
     </html>
   );
 }
