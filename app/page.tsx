@@ -9,7 +9,7 @@ import { LegalFooterBase } from "@/components/LegalPage";
 import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, LiveMockup, OfflineArt, ServerMockup } from "@/components/Mockups";
 import { PageEffects } from "@/components/PageEffects";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { navLinks, release } from "@/lib/site";
+import { legal, navLinks, release, siteUrl } from "@/lib/site";
 
 
 const websiteTemplates = [
@@ -129,9 +129,44 @@ function Sel({ children }: { children: ReactNode }) {
   );
 }
 
+// Structured data for search engines: who makes Makora, and the app itself.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "Makora",
+      url: `${siteUrl}/`,
+      logo: `${siteUrl}/icon.svg`,
+      email: legal.contactEmail,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: "Makora",
+      url: `${siteUrl}/`,
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: "Makora",
+      applicationCategory: "DesignApplication",
+      operatingSystem: "macOS, Windows, Web",
+      softwareVersion: release.version,
+      description:
+        "One friendly app for presentations, social posts, videos, posters, invitations, whiteboards, documents and websites.",
+      url: `${siteUrl}/`,
+      image: `${siteUrl}/opengraph-image.png`,
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <a className="skip" href="#main">Skip to content</a>
       <PageEffects />
 

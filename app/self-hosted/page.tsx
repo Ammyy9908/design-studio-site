@@ -7,14 +7,19 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, release } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Self-Hosted Guide — Makora",
+  title: "Self-Hosted Guide",
   description:
     "Run Makora on your own server. The usual install is Docker Compose. The same server also runs behind your own proxy, with your own database and storage, as a process, or on Kubernetes.",
+  alternates: { canonical: "/self-hosted/" },
   openGraph: {
-    title: "Makora — Self-Hosted Guide",
+    title: "Self-Hosted Guide — Makora",
     description:
-      "Self-host Makora with Docker Compose, your own proxy, your own database and storage, a system process, or Kubernetes.",
+      "Run Makora on your own server. The usual install is Docker Compose. The same server also runs behind your own proxy, with your own database and storage, as a process, or on Kubernetes.",
+    url: "/self-hosted/",
+    siteName: "Makora",
     type: "article",
+    // A page's own openGraph replaces the site's, picture included, so name the shared picture again.
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630 }],
   },
 };
 

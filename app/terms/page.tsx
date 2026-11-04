@@ -3,9 +3,20 @@ import { LegalPage } from "@/components/LegalPage";
 import { legal } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Makora",
+  title: "Terms of Service",
   description:
     "The rules for using Makora: your account, who owns what you make, what you can't do with it, AI features, apps, and our limits of responsibility.",
+  alternates: { canonical: "/terms/" },
+  openGraph: {
+    title: "Terms of Service — Makora",
+    description:
+      "The rules for using Makora: your account, who owns what you make, what you can't do with it, AI features, apps, and our limits of responsibility.",
+    url: "/terms/",
+    siteName: "Makora",
+    type: "article",
+    // A page's own openGraph replaces the site's, picture included, so name the shared picture again.
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630 }],
+  },
 };
 
 const sections = [

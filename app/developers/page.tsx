@@ -8,9 +8,20 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, release } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Developer Docs — Makora",
+  title: "Developer Docs",
   description:
     "Build apps for Makora on your own self-hosted server: turn on the developer portal, follow the quickstart, and read the manifest, SDK and sandbox reference.",
+  alternates: { canonical: "/developers/" },
+  openGraph: {
+    title: "Developer Docs — Makora",
+    description:
+      "Build apps for Makora on your own self-hosted server: turn on the developer portal, follow the quickstart, and read the manifest, SDK and sandbox reference.",
+    url: "/developers/",
+    siteName: "Makora",
+    type: "article",
+    // A page's own openGraph replaces the site's, picture included, so name the shared picture again.
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630 }],
+  },
 };
 
 const sections = [

@@ -22,6 +22,9 @@ export const release = {
   },
 } as const;
 
+// The site's public address: link previews, the sitemap and canonical links are built from it.
+export const siteUrl = "https://www.makora.design";
+
 // The Privacy Policy and Terms of Service. Change `updated` whenever either page changes.
 export const legal = {
   contactEmail: "support@makora.design",
