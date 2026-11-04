@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { CodeBlock } from "@/components/CodeBlock";
 import { Logo } from "@/components/Icons";
+import { LegalFooterBase } from "@/components/LegalPage";
 import { PageEffects } from "@/components/PageEffects";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, release } from "@/lib/site";
@@ -520,10 +521,7 @@ export default function DevelopersPage() {
       </main>
 
       <footer className="footer">
-        <div className="container footer__base">
-          <span>© {new Date().getFullYear()} Makora</span>
-          <span>Version {release.version}</span>
-        </div>
+        <LegalFooterBase version={`Version ${release.version}`} />
       </footer>
     </>
   );

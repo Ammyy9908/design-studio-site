@@ -5,6 +5,7 @@ import { DownloadButtons } from "@/components/DownloadButtons";
 import { FormatShowcase } from "@/components/FormatShowcase";
 import type { CSSProperties, ReactNode } from "react";
 import { AppleIcon, WindowsIcon, DownloadIcon, Logo, ArrowRightIcon } from "@/components/Icons";
+import { LegalFooterBase } from "@/components/LegalPage";
 import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, LiveMockup, OfflineArt, ServerMockup } from "@/components/Mockups";
 import { PageEffects } from "@/components/PageEffects";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -426,10 +427,7 @@ export default function Home() {
             </ul>
           </nav>
         </div>
-        <div className="container footer__base">
-          <span>© {new Date().getFullYear()} Makora</span>
-          <span>Version {release.version} · macOS &amp; Windows</span>
-        </div>
+        <LegalFooterBase version={`Version ${release.version} · macOS & Windows`} />
       </footer>
     </>
   );

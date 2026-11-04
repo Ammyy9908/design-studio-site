@@ -22,6 +22,12 @@ export const release = {
   },
 } as const;
 
+// The Privacy Policy and Terms of Service. Change `updated` whenever either page changes.
+export const legal = {
+  contactEmail: "support@makora.design",
+  updated: "4 November 2026",
+} as const;
+
 /** The developer site: docs for building apps, and the portal for listing them. */
 
 export const navLinks = [

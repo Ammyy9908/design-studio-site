@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Logo } from "@/components/Icons";
+import { LegalFooterBase } from "@/components/LegalPage";
 import { PageEffects } from "@/components/PageEffects";
 import { SelfHostedGuide } from "@/components/SelfHostedGuide";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -159,10 +160,7 @@ export default function SelfHostedPage() {
             </ul>
           </nav>
         </div>
-        <div className="container footer__base">
-          <span>© {new Date().getFullYear()} Makora</span>
-          <span>Version {release.version}</span>
-        </div>
+        <LegalFooterBase version={`Version ${release.version}`} />
       </footer>
     </>
   );
