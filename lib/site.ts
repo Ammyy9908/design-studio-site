@@ -1,6 +1,7 @@
 // Release details shown across the page. Update these when a new build ships.
 // The installers live in the makora-builds R2 bucket, served at downloads.makora.design. Each release
-// overwrites Makora-mac.dmg and Makora-windows.zip there, so these links stay the same.
+// overwrites Makora-mac.dmg, Makora-windows.zip and the two design-studio-server-linux-*.zip bundles there,
+// so these links stay the same.
 const downloads = "https://downloads.makora.design";
 
 export const release = {
@@ -21,8 +22,8 @@ export const release = {
   // in the app repository): the server image (docker load), compose file and settings template.
   server: {
     requirements: "Linux · Docker 24+",
-    amd64: { label: "Server bundle · x86-64", href: "downloads/design-studio-server-0.1.33-linux-amd64.zip" },
-    arm64: { label: "Server bundle · arm64", href: "downloads/design-studio-server-0.1.33-linux-arm64.zip" },
+    amd64: { label: "Server bundle · x86-64", href: `${downloads}/design-studio-server-linux-amd64.zip` },
+    arm64: { label: "Server bundle · arm64", href: `${downloads}/design-studio-server-linux-arm64.zip` },
   },
 } as const;
 

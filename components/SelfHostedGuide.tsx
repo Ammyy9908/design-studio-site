@@ -107,6 +107,83 @@ const settings = [
     description: "Turns on “Continue with Google”. Create a Web application OAuth client with the redirect address <PUBLIC_URL>/api/auth/google/callback.",
   },
   {
+    name: "OIDC_ISSUER / OIDC_CLIENT_ID / OIDC_CLIENT_SECRET",
+    group: "signin",
+    required: false,
+    example: "https://example.okta.com",
+    description: "Turns on company sign-in (SSO) with OpenID Connect: Okta, Microsoft Entra ID, Auth0, Keycloak and others. Use the redirect address <PUBLIC_URL>/api/auth/oidc/callback. Empty issuer = off.",
+  },
+  {
+    name: "SAML_IDP_METADATA_URL / SAML_IDP_METADATA_XML",
+    group: "signin",
+    required: false,
+    example: "(empty = off)",
+    description: "Turns on SAML sign-in. Give your identity provider's metadata as a URL or as XML. Its reply (ACS) address is <PUBLIC_URL>/api/auth/saml/acs.",
+  },
+  {
+    name: "SAML_SP_ENTITY_ID / SAML_SP_CERT / SAML_SP_KEY",
+    group: "signin",
+    required: false,
+    example: "(empty = made by the server)",
+    description: "Optional fixed identity for Makora in SAML. Without a certificate and key, the server makes new ones each time it starts.",
+  },
+  {
+    name: "OIDC_BUTTON_LABEL / SAML_BUTTON_LABEL",
+    group: "signin",
+    required: false,
+    example: "Continue with SSO",
+    description: "The text on the sign-in button.",
+  },
+  {
+    name: "TURN_KEY_ID / TURN_KEY_API_TOKEN",
+    group: "calls",
+    required: false,
+    example: "from Cloudflare Realtime",
+    description: "A Cloudflare TURN key that relays voice calls on networks that block direct connections, such as many offices. Empty = calls connect directly only.",
+  },
+  {
+    name: "MARKETPLACE_URL",
+    group: "apps",
+    required: false,
+    example: "https://platform.makora.design",
+    description: "Where apps come from. Your server reads the app list and packages every 15 minutes; nothing about people or designs is sent. off = no marketplace.",
+  },
+  {
+    name: "APPS_ALLOWED",
+    group: "apps",
+    required: false,
+    example: "all",
+    description: "Which apps people can see: all, none, or a list of app ids such as pexels,other-app.",
+  },
+  {
+    name: "APP_SECRET_<APP ID>_<NAME>",
+    group: "apps",
+    required: false,
+    example: "APP_SECRET_PEXELS_PEXELS_API_KEY",
+    description: "Keys that installed apps need, such as the Pexels app's free key. They stay on the server; the app's requests go through it.",
+  },
+  {
+    name: "DEVELOPER_URL",
+    group: "apps",
+    required: false,
+    example: "https://developers.example.com",
+    description: "Turns on the developer portal at its own address, where people build and review apps. It needs its own DNS record. Empty = no portal.",
+  },
+  {
+    name: "ADMIN_EMAILS",
+    group: "apps",
+    required: false,
+    example: "you@example.com",
+    description: "People who invite developers and review app versions in the portal, separated by commas.",
+  },
+  {
+    name: "APP_KEYS_SECRET",
+    group: "apps",
+    required: false,
+    example: "openssl rand -base64 32",
+    description: "Encrypts app keys and people's connected accounts. Needed for the portal. Don't change it later.",
+  },
+  {
     name: "ASK_STUDIO_PROVIDER",
     group: "ask",
     required: false,
@@ -207,6 +284,13 @@ const settings = [
       "Shared secret for that separate WebSocket process. At least 32 characters, and the same value on the server and on the WebSocket process. Unused while REALTIME_URL is empty.",
   },
   {
+    name: "REDIRECT_URLS",
+    group: "general",
+    required: false,
+    example: "https://www.studio.example.com",
+    description: "Other names that send visitors to PUBLIC_URL, separated by spaces. Each needs a DNS record pointing at the server. Works with the included HTTPS proxy.",
+  },
+  {
     name: "CUSTOM_DOMAINS",
     group: "general",
     required: false,
@@ -243,7 +327,9 @@ const settingGroups = [
   { id: "general", label: "General" },
   { id: "secrets", label: "Secrets" },
   { id: "email", label: "Email" },
-  { id: "signin", label: "Google sign-in" },
+  { id: "signin", label: "Sign-in & SSO" },
+  { id: "apps", label: "Apps & portal" },
+  { id: "calls", label: "Voice calls" },
   { id: "ask", label: "Ask Studio" },
   { id: "external", label: "Your own database & storage" },
   { id: "realtime", label: "WebSocket" },
@@ -442,10 +528,10 @@ export function SelfHostedGuide() {
                     a settings template.
                   </p>
                   <p>
-                    <a className="btn btn--violet btn--sm" href={`/${release.server.amd64.href}`} download>
+                    <a className="btn btn--violet btn--sm" href={release.server.amd64.href} download>
                       <DownloadIcon /> {release.server.amd64.label}
                     </a>{" "}
-                    <a className="btn btn--outline btn--sm" href={`/${release.server.arm64.href}`} download>
+                    <a className="btn btn--outline btn--sm" href={release.server.arm64.href} download>
                       <DownloadIcon /> {release.server.arm64.label}
                     </a>
                   </p>
@@ -1437,6 +1523,11 @@ cd ../.. && docker compose --profile https up -d`}
               <li>
                 Download the new server bundle for the same architecture. Copy its <code>docker-compose.yml</code> and{" "}
                 <code>Caddyfile</code> over yours, and keep your <code>.env</code>.
+              </li>
+              <li>
+                Compare your <code>.env</code> with the new <code>.env.example</code> and add any settings you want. Coming
+                from 0.1.33 or earlier? Set <code>MARKETPLACE_URL=https://platform.makora.design</code>: the old marketplace
+                address no longer works.
               </li>
               <li>Load the new image, set the version and restart:</li>
             </ol>
