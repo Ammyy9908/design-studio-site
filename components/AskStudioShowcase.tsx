@@ -31,7 +31,7 @@ const OpenVisual = (
     <DocFrame>
       <Toolbar glow />
       <div className="aa-page">
-        <p className="aa-ghost">Untitled doc</p>
+        <p className="aa-title aa-ghost">Untitled doc</p>
         <span className="aa-caret" />
       </div>
     </DocFrame>
@@ -62,11 +62,11 @@ const DraftVisual = (
     <DocFrame url="Q3 launch plan">
       <Toolbar />
       <div className="aa-page" aria-hidden="true">
-        <h4>Q3 Launch Plan</h4>
+        <p className="aa-title">Q3 Launch Plan</p>
         <p className="aa-line" style={{ width: "96%" }} />
         <p className="aa-line" style={{ width: "88%" }} />
         <div className="aa-callout"><i style={{ width: "70%" }} /></div>
-        <h5>Key priorities</h5>
+        <p className="aa-subtitle">Key priorities</p>
         <ul>
           <li><i style={{ width: "62%" }} /></li>
           <li><i style={{ width: "74%" }} /></li>

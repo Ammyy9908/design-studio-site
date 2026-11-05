@@ -3573,22 +3573,19 @@ button {
   background: #1a1830;
   min-height: 210px;
 }
-.aa-page h4 {
+/* The mock docs' titles are paragraphs, not headings, so the page's heading levels stay in order. */
+.aa-page .aa-title {
+  margin: 1.33em 0 12px;
   font-size: 22px;
   font-weight: 600;
-  margin-bottom: 12px;
 }
-.aa-page h5 {
+.aa-page .aa-subtitle {
   font-size: 14px;
+  font-weight: 700;
   margin: 14px 0 8px;
   color: #c9c6e2;
 }
 .aa-ghost {
-  /* A paragraph styled as the doc's title, so the page's heading levels stay in order. */
-  margin: 1.33em 0 12px;
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.55;
   color: #5e554a;
 }
 .aa-caret {
