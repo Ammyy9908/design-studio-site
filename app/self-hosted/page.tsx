@@ -9,12 +9,12 @@ import { navLinks, release } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Self-Hosted Guide",
   description:
-    "Run Makora on your own server. The usual install is Docker Compose. The same server also runs behind your own proxy, with your own database and storage, as a process, or on Kubernetes.",
+    "Run Makora on your own server with Docker Compose, or behind your own proxy, with your own database and storage, or on Kubernetes.",
   alternates: { canonical: "/self-hosted/" },
   openGraph: {
     title: "Self-Hosted Guide — Makora",
     description:
-      "Run Makora on your own server. The usual install is Docker Compose. The same server also runs behind your own proxy, with your own database and storage, as a process, or on Kubernetes.",
+      "Run Makora on your own server with Docker Compose, or behind your own proxy, with your own database and storage, or on Kubernetes.",
     url: "/self-hosted/",
     siteName: "Makora",
     type: "article",
@@ -154,7 +154,7 @@ export default function SelfHostedPage() {
                 <a href="/#faq">FAQ</a>
               </li>
               <li>
-                <a href="/#offline">Working offline</a>
+                <a href="/install/">Opening the desktop app</a>
               </li>
               <li>
                 <a href="/self-hosted/">Self-Hosted Guide</a>

@@ -54,7 +54,7 @@ export default function PrivacyPage() {
         <p>
           Makora can also run on a company&rsquo;s own server (self-hosted). If you use Makora on a server that
           your organisation runs, that organisation decides what happens to your data, and this policy does not
-          apply to it. The desktop app used offline keeps your designs on your own computer and sends us nothing.
+          apply to it.
         </p>
       </section>
 

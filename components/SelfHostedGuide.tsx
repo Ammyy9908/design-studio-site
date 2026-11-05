@@ -1113,10 +1113,6 @@ S3_USE_SSL=false \\
                 out and takes effect after a restart.
               </li>
               <li>
-                <strong>Working offline:</strong> choose <strong>Use offline, without a server</strong> to keep designs as
-                files on the computer. You can connect to a server later with <strong>Connect</strong> in the left bar.
-              </li>
-              <li>
                 <strong>Company certificates:</strong> if your server uses your organisation&rsquo;s own certificate
                 authority, install its root certificate on each computer (for example through your device management)
                 and restart the app. Otherwise the app reports that it doesn&rsquo;t trust the server&rsquo;s certificate.

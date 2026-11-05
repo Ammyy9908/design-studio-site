@@ -24,7 +24,7 @@ const summary = `# Makora
 - Live co-editing with everyone's cursors, comments with @mentions, and email notifications you can turn down or off.
 - A voice call room for up to 6 people in every design, following a teammate's view, and cursor chat.
 - Version history that saves by itself, with named versions and safe restore.
-- The desktop app works offline and keeps your work on your computer.
+- The desktop app for Mac and Windows connects to the hosted service or to your own server.
 
 ## Apps and developers
 

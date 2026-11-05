@@ -6,7 +6,7 @@ import { FormatShowcase } from "@/components/FormatShowcase";
 import type { CSSProperties, ReactNode } from "react";
 import { AppleIcon, WindowsIcon, DownloadIcon, Logo, ArrowRightIcon } from "@/components/Icons";
 import { LegalFooterBase } from "@/components/LegalPage";
-import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, LiveMockup, OfflineArt, ServerMockup } from "@/components/Mockups";
+import { AskStudioMockup, AssetsMockup, BrowserArt, BrowserFrame, LiveMockup, ServerMockup } from "@/components/Mockups";
 import { PageEffects } from "@/components/PageEffects";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { faqs } from "@/lib/faqs";
@@ -245,10 +245,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Bento: teamwork, assets, offline, browser ────── */}
+        {/* ── Bento: teamwork, assets, browser, self-hosted ── */}
         <section className="section section--tight" id="together" aria-labelledby="together-title">
           <div className="container">
-            <h2 id="together-title" className="section__title">Work <Sel>together</Sel>, offline or on your own server</h2>
+            <h2 id="together-title" className="section__title">Work <Sel>together</Sel>, anywhere or on your own server</h2>
             <div className="bento">
               <article className="bcard bcard--full">
                 <div className="bcard__text">
@@ -265,19 +265,12 @@ export default function Home() {
                   ))}
                 </ul>
               </article>
-              <article className="bcard bcard--peach" id="assets">
+              <article className="bcard bcard--peach bcard--wide" id="assets">
                 <div className="bcard__text">
                   <h3>Your photos, always at hand</h3>
                   <p>Keep photos, logos and graphics in one library and drag them into any design.</p>
                 </div>
                 <AssetsMockup />
-              </article>
-              <article className="bcard bcard--mint" id="offline">
-                <div className="bcard__text">
-                  <h3>Works offline</h3>
-                  <p>Keep designing on a plane or in a café with bad signal. Your work is saved on your computer.</p>
-                </div>
-                <OfflineArt />
               </article>
               <article className="bcard bcard--blue">
                 <div className="bcard__text">
@@ -388,7 +381,7 @@ export default function Home() {
             <h2 className="footer__h">Help</h2>
             <ul>
               <li><a href="#faq">FAQ</a></li>
-              <li><a href="#offline">Working offline</a></li>
+              <li><a href="/install/">Opening the desktop app</a></li>
               <li><a href="/self-hosted/">Self-Hosted Guide</a></li>
               <li><a href="/developers/">Developer docs</a></li>
             </ul>
