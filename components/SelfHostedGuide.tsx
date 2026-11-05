@@ -1074,11 +1074,11 @@ S3_USE_SSL=false \\
                 <div className="sh-step__content">
                   <h3>Install and open Makora</h3>
                   <p>
-                    <a href={`/${release.mac.href}`} download>
+                    <a href={release.mac.href} download>
                       Download for Mac
                     </a>{" "}
                     ·{" "}
-                    <a href={`/${release.windows.href}`} download>
+                    <a href={release.windows.href} download>
                       Download for Windows
                     </a>
                   </p>

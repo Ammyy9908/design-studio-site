@@ -9,10 +9,6 @@ export const faqs: { q: string; a: string }[] = [
     a: "Makora runs on Macs with Apple silicon (M1 or newer) using macOS 12 or later, and on PCs with Windows 10 or later. There's also a browser version if you'd rather not install anything.",
   },
   {
-    q: "Does it work without an internet connection?",
-    a: "Yes. On your computer you can open, edit and save your designs with no connection at all. Things that need the internet, like publishing a website or editing with others, pick up again once you're back online.",
-  },
-  {
     q: "How do I put my website online?",
     a: "Press Publish. Your site goes live on the web straight away, with no hosting to set up. Made a change later? Press Publish again and the new version replaces the old one.",
   },
@@ -42,7 +38,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Where are my photos kept?",
-    a: "Photos you add in the desktop app stay on your computer and are ready to use in any design.",
+    a: "Photos you add go into your library on your Makora server: the hosted service, or your own server if you self-host. They're ready to use in any design, on any computer you sign in from.",
   },
   {
     q: "What are apps?",

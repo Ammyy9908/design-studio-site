@@ -31,7 +31,7 @@ const OpenVisual = (
     <DocFrame>
       <Toolbar glow />
       <div className="aa-page">
-        <h4 className="aa-ghost">Untitled doc</h4>
+        <p className="aa-ghost">Untitled doc</p>
         <span className="aa-caret" />
       </div>
     </DocFrame>

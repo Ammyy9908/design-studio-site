@@ -60,6 +60,7 @@ const structuredData = {
       "@type": "Organization",
       "@id": `${siteUrl}/#organization`,
       name: "Makora",
+      alternateName: "Makora Design",
       url: `${siteUrl}/`,
       logo: `${siteUrl}/icon.svg`,
       email: legal.contactEmail,
@@ -74,6 +75,7 @@ const structuredData = {
     {
       "@type": "SoftwareApplication",
       name: "Makora",
+      alternateName: "Makora design app",
       applicationCategory: "DesignApplication",
       operatingSystem: "macOS, Windows, Web",
       softwareVersion: release.version,
@@ -368,6 +370,7 @@ export default function Home() {
               <li><a href="#templates">Templates</a></li>
               <li><a href="#together">Teamwork</a></li>
               <li><a href="/self-hosted/">Self-hosting</a></li>
+              <li><a href="/self-hosted-canva-alternative/">Self-hosted Canva alternative</a></li>
             </ul>
           </nav>
           <nav aria-label="Download">

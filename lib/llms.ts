@@ -35,6 +35,7 @@ const summary = `# Makora
 const links = `## Docs
 
 - [Self-Hosted Guide](${siteUrl}/self-hosted/): run Makora on your own server with Docker Compose, your own proxy, database and storage, as a process, or on Kubernetes.
+- [Self-hosted Canva alternative](${siteUrl}/self-hosted-canva-alternative/): what a team gets when it runs Makora on its own server, and how to install it.
 - [Developer Docs](${siteUrl}/developers/): build apps for Makora: the portal, quickstart, manifest, SDK, keys, connected accounts, sandbox and publishing.
 
 ## Policies

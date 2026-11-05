@@ -3584,6 +3584,11 @@ button {
   color: #c9c6e2;
 }
 .aa-ghost {
+  /* A paragraph styled as the doc's title, so the page's heading levels stay in order. */
+  margin: 1.33em 0 12px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.55;
   color: #5e554a;
 }
 .aa-caret {

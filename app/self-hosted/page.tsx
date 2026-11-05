@@ -130,18 +130,21 @@ export default function SelfHostedPage() {
               <li>
                 <a href="/self-hosted/">Self-hosting</a>
               </li>
+              <li>
+                <a href="/self-hosted-canva-alternative/">Self-hosted Canva alternative</a>
+              </li>
             </ul>
           </nav>
           <nav aria-label="Download">
             <h2 className="footer__h">Download</h2>
             <ul>
               <li>
-                <a href={`/${release.mac.href}`} download>
+                <a href={release.mac.href} download>
                   Mac
                 </a>
               </li>
               <li>
-                <a href={`/${release.windows.href}`} download>
+                <a href={release.windows.href} download>
                   Windows
                 </a>
               </li>
