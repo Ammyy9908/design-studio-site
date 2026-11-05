@@ -1,6 +1,6 @@
 // Release details shown across the page. Update these when a new build ships.
 // The installers live in the makora-builds R2 bucket, served at downloads.makora.design. Each release
-// overwrites Makora-mac.dmg, Makora-windows.zip and the two design-studio-server-linux-*.zip bundles there,
+// overwrites Makora-mac.dmg, Makora-windows-setup.exe and the two design-studio-server-linux-*.zip bundles there,
 // so these links stay the same.
 const downloads = "https://downloads.makora.design";
 
@@ -11,12 +11,11 @@ export const release = {
     href: `${downloads}/Makora-mac.dmg`,
     requirements: "macOS 12 or later · Apple silicon (M1 or newer)",
   },
-  // A zip for now (unzip, then run Makora.exe); an installer needs makensis, which runs
-  // only under Rosetta on Apple silicon build machines.
+  // A step-by-step installer: people choose the folder and whether to add a desktop shortcut.
   windows: {
     label: "Download for Windows",
-    href: `${downloads}/Makora-windows.zip`,
-    requirements: "Windows 10 or later · 64-bit · unzip, then run Makora.exe",
+    href: `${downloads}/Makora-windows-setup.exe`,
+    requirements: "Windows 10 or later · 64-bit",
   },
   // The self-hosted server, one bundle per CPU architecture (made by deploy/self-hosted/make-bundle.sh
   // in the app repository): the server image (docker load), compose file and settings template.

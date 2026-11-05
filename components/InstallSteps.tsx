@@ -47,9 +47,10 @@ export function WindowsWhy() {
 export function WindowsSteps() {
   return (
     <ol className="install__steps">
-      <li>Right-click <b>Makora-{release.version}-win.zip</b> in your Downloads and choose <b>Extract All</b>. Running it from inside the zip won&rsquo;t work.</li>
-      <li>Open the extracted folder and double-click <b>Makora.exe</b>.</li>
+      <li>Open <b>Makora-{release.version}-setup.exe</b> from your Downloads.</li>
       <li>If Windows says it protected your PC, click <b>More info</b>, then <b>Run anyway</b>.</li>
+      <li>Choose who to install it for and the folder, and tick <b>Create a desktop shortcut</b> if you want one. Then click <b>Install</b>.</li>
+      <li>Open Makora from the Start menu, or from your desktop if you added the shortcut.</li>
     </ol>
   );
 }
